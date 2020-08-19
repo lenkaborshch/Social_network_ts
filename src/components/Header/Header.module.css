@@ -1,0 +1,11 @@
+.header {
+    grid-area: h;
+    position: sticky;
+    top: 0;
+    background-color: rgba(68,72,255,0.7)
+}
+
+.header img {
+    height: 60px;
+    padding-left: 2px;
+}
