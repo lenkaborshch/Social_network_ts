@@ -1,6 +1,7 @@
-import cover from "../../img/cover.jpg";
-import React from "react";
-import style from "./Profile.module.css";
+import cover from '../../img/cover.jpg';
+import React from 'react';
+import style from './Profile.module.css';
+import MyPosts from './MyPosts/MyPosts';
 
 function Profile() {
     return (
@@ -11,14 +12,7 @@ function Profile() {
             <div>
                 ava + description
             </div>
-            <div>
-                My posts
-                <div>New Post</div>
-                <div className={style.posts}>
-                    <div className={style.item}>Post 1</div>
-                    <div className={style.item}>Post 2</div>
-                </div>
-            </div>
+            <MyPosts/>
         </div>
     )
 }

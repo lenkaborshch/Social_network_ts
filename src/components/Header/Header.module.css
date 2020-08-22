@@ -1,8 +1,8 @@
 .header {
     grid-area: h;
-    position: sticky;
+    /*position: sticky;*/
     top: 0;
-    background-color: rgba(68,72,255,0.7)
+    background-color: #7a7cff;
 }
 
 .header img {
