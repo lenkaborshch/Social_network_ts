@@ -5,9 +5,9 @@ import MyPosts from './MyPosts/MyPosts';
 
 function Profile() {
     return (
-        <div className={style.content}>
+        <div>
             <div>
-                <img src={cover}/>
+                <img className={style.cover} src={cover}/>
             </div>
             <div>
                 ava + description

@@ -1,0 +1,22 @@
+.dialogs {
+    display: flex;
+    font-size: 18px;
+}
+
+.dialogsItems {
+    padding: 10px;
+}
+
+.messages {
+    padding: 10px;
+}
+
+.dialog a {
+    text-decoration: none;
+    color: black;
+}
+
+a.active {
+    color: rgba(255, 123, 231, 0.87);
+    font-weight: bolder;
+}

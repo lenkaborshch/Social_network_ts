@@ -1,10 +1,10 @@
 .nav {
     grid-area: n;
-    position: static;
 }
 
-.navMenu {
-    padding: 15px;
+.item {
+    margin: 10px;
+
 }
 
 .item a {
@@ -14,10 +14,7 @@
 }
 
 .item a.active {
-    font-size: 25px;
+    color: #7a7cff;
+    font-size: 22px;
     font-weight: bolder;
-}
-
-.item {
-    margin-bottom: 10px;
 }
