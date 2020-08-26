@@ -22,8 +22,6 @@ function Navbar() {
             </div>
             <div className={style.item}>
                 <NavLink to='/users' activeClassName={style.active}>Users</NavLink>
-                Create dialogs page, make routing for profile and dialogs components, active link for each dialogs and navbar
-
             </div>
         </nav>
     )
