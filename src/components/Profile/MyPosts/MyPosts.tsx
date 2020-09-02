@@ -1,8 +1,21 @@
 import React from 'react';
 import style from './MyPosts.module.css';
 import Post from './Post/Post';
+import {v1} from 'uuid';
+
+type PostsDataType = {
+    id: string
+    message: string
+    likesCount: string
+}
 
 function MyPosts() {
+
+    let posts: Array<PostsDataType> = [
+        {id: v1(), message: 'Hey', likesCount: '20'},
+        {id: v1(), message: 'How are you?', likesCount: '2'}
+    ]
+
     return (
         <div>
             My posts
@@ -14,8 +27,7 @@ function MyPosts() {
                 </div>
             </div>
             <div className={style.posts}>
-                <Post message='Hello' likesCount="25"/>
-                <Post message='It`s my first social network' likesCount='14'/>
+                { posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>) }
             </div>
         </div>
     )
