@@ -2,42 +2,24 @@ import React from 'react';
 import style from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {v1} from 'uuid';
+import {DialogsPageType} from '../../redux/state';
 
-type DialogsDataType = {
-    id: string
-    name: string
+type DialogsPropsType = {
+    state: DialogsPageType
 }
 
-type MessageDataType = {
-    id: string
-    message: string
-}
+function Dialogs(props: DialogsPropsType) {
 
-function Dialogs() {
-
-    let dialogs: Array<DialogsDataType> = [
-        {id: v1(), name: 'Vadim'},
-        {id: v1(), name: 'Mama'},
-        {id: v1(), name: 'Papa'},
-        {id: v1(), name: 'Yurii'},
-        {id: v1(), name: 'Nik'},
-    ];
-
-    let messages: Array<MessageDataType> = [
-        {id: v1(), message: 'Hey'},
-        {id: v1(), message: 'How are you?'},
-        {id: v1(), message: 'Yoo'},
-        {id: v1(), message: 'Woow'}
-    ];
+    const dialogsElements = props.state.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>);
+    const messagesElements = props.state.messages.map(m => <Message key={m.id} message={m.message} author={m.author}/>);
 
     return (
         <div className={style.dialogs}>
             <div className={style.dialogsItems}>
-                { dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>) }
+                {dialogsElements}
             </div>
             <div className={style.messages}>
-                { messages.map(m => <Message key={m.id} message={m.message}/>) }
+                {messagesElements}
             </div>
         </div>
     )

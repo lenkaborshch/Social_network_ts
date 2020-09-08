@@ -1,20 +1,15 @@
 import React from 'react';
 import style from './MyPosts.module.css';
 import Post from './Post/Post';
-import {v1} from 'uuid';
+import {PostType} from '../../../redux/state';
 
-type PostsDataType = {
-    id: string
-    message: string
-    likesCount: string
+type MyPostsPropsType = {
+    state:  { posts: Array<PostType> }
 }
 
-function MyPosts() {
+function MyPosts(props: MyPostsPropsType) {
 
-    let posts: Array<PostsDataType> = [
-        {id: v1(), message: 'Hey', likesCount: '20'},
-        {id: v1(), message: 'How are you?', likesCount: '2'}
-    ]
+    const postsElement = props.state.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>);
 
     return (
         <div>
@@ -27,7 +22,7 @@ function MyPosts() {
                 </div>
             </div>
             <div className={style.posts}>
-                { posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>) }
+                {postsElement}
             </div>
         </div>
     )
