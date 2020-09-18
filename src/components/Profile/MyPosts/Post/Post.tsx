@@ -10,7 +10,7 @@ type PostPropsType = {
 function Post(props: PostPropsType) {
     return (
         <div className={style.item}>
-            <img src={post_image}/>
+            <img src={post_image} alt='postImage'/>
             {props.message}
             <div>
                 {props.likesCount} <span>❤</span>

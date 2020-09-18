@@ -5,10 +5,14 @@ import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 import {RootStateType} from './redux/state';
-import { Route } from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 type AppPropsType = {
     state: RootStateType
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+    addMessage: () => void
+    updateNewMessageText: (newMessageText: string) => void
 }
 
 function App(props: AppPropsType) {
@@ -18,10 +22,14 @@ function App(props: AppPropsType) {
             <Navbar state={props.state.sidebar}/>
             <div className='app-wrapper-content'>
                 <Route path='/profile'
-                       render={() => <Profile state={props.state.profilePage}/>}
+                       render={() => <Profile profilePage={props.state.profilePage}
+                                              addPost={props.addPost}
+                                              updateNewPostText={props.updateNewPostText}/>}
                 />
                 <Route path='/dialogs'
-                       render={() => <Dialogs state={props.state.dialogsPage}/>}
+                       render={() => <Dialogs dialogsPage={props.state.dialogsPage}
+                                              addMessage={props.addMessage}
+                                              updateNewMessageText={props.updateNewMessageText}/>}
                 />
             </div>
         </div>

@@ -6,7 +6,7 @@ function ProfileInfo() {
     return (
         <div>
             <div>
-                <img className={style.cover} src={cover}/>
+                <img className={style.cover} src={cover} alt='coverImage'/>
             </div>
             <div>
                 ava + description

@@ -1,4 +1,5 @@
 import {v1} from 'uuid';
+import {rerenderEntireThree} from '../render';
 
 export type PostType = {
     id: string
@@ -24,11 +25,13 @@ export type MessageType = {
 
 export type ProfilePageType = {
     posts: Array<PostType>
+    newPostText: string
 }
 
 export type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
+    newMessageText: string
 }
 
 export type FriendType = {
@@ -52,7 +55,8 @@ let state: RootStateType = {
         posts: [
             {id: v1(), message: 'Hey', likesCount: '20'},
             {id: v1(), message: 'How are you?', likesCount: '2'}
-        ]
+        ],
+        newPostText: ''
     },
     dialogsPage: {
         dialogs: [
@@ -87,7 +91,8 @@ let state: RootStateType = {
                     src: 'https://i.pinimg.com/originals/f4/d2/96/f4d2961b652880be432fb9580891ed62.png'
                 }
             },
-        ]
+        ],
+        newMessageText: ''
     },
     sidebar: {
         friends: [
@@ -108,6 +113,41 @@ let state: RootStateType = {
             }
         ]
     }
+}
+
+export const addPost = () => {
+    let newPost = {
+        id: v1(),
+        message: state.profilePage.newPostText,
+        likesCount: '0'
+    }
+    state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = '';
+    rerenderEntireThree(state);
+}
+
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText;
+    rerenderEntireThree(state);
+}
+
+export const addMessage = () => {
+    let newMessage = {
+        id: v1(),
+        message: state.dialogsPage.newMessageText,
+        author: {
+            name: 'Vadim',
+            src: 'https://i.pinimg.com/originals/f4/d2/96/f4d2961b652880be432fb9580891ed62.png'
+        }
+    }
+    state.dialogsPage.messages.push(newMessage);
+    state.dialogsPage.newMessageText = '';
+    rerenderEntireThree(state);
+}
+
+export const updateNewMessageText = (newMessageText: string) => {
+    state.dialogsPage.newMessageText = newMessageText;
+    rerenderEntireThree(state);
 }
 
 export default state;

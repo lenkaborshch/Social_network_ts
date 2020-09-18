@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './Message.module.css';
-import { AuthorMessage } from '../../../redux/state';
+import {AuthorMessage} from '../../../redux/state';
 
 type MessageType = {
     message: string
@@ -10,7 +10,7 @@ type MessageType = {
 function Message(props: MessageType) {
     return (
         <div className={style.wrapperMessage}>
-            <img src={props.author.src} className={style.avatar} alt='author`s photo'/>
+            <img src={props.author.src} className={style.avatar} alt='authorImage'/>
             <div className={style.message}>
                 <div className={style.author}>{props.author.name}</div>
                 <div>

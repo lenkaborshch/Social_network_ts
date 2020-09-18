@@ -5,7 +5,7 @@ import style from './Header.module.css';
 function Header() {
     return (
         <header className={style.header}>
-            <img src={logo}/>
+            <img src={logo} alt='logoImage'/>
         </header>
     )
 }
