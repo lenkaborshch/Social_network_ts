@@ -1,4 +1,5 @@
 import {v1} from 'uuid';
+import {ChangeEvent} from 'react';
 
 export type PostType = {
     id: string
@@ -49,18 +50,21 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 
+export type ActionsTypes =
+    ReturnType<typeof addPostAC> // === addPostType = {type: 'ADD_POST'}; ReturnType - Создает тип, состоящий из возвращаемого типа функции Type.
+    | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof addMessageAC>
+    | ReturnType<typeof updateNewMessageTextAC>
+
 export type StoreType = {
     _state: RootStateType
-    getState: () => RootStateType
     _callSubscriber: (state: RootStateType) => void
+    getState: () => RootStateType
     subscribe: (observer: (state: RootStateType) => void) => void
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
-    addMessage: () => void
-    updateNewMessageText: (newMessageText: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
-let store: StoreType = {
+const store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -125,46 +129,70 @@ let store: StoreType = {
             ]
         }
     },
-    getState() {
-        return this._state
-    },
     _callSubscriber(state: RootStateType) {
         console.log('State changed')
+    },
+    getState() {
+        return this._state
     },
     subscribe(observer) {
         this._callSubscriber = observer
     },
-    addPost() {
-        let newPost: PostType = {
-            id: v1(),
-            message: this._state.profilePage.newPostText,
-            likesCount: '0'
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
-    },
-    addMessage() {
-        let newMessage = {
-            id: v1(),
-            message: this._state.dialogsPage.newMessageText,
-            author: {
-                name: 'Vadim',
-                src: 'https://i.pinimg.com/originals/f4/d2/96/f4d2961b652880be432fb9580891ed62.png'
+    dispatch(action) {
+        switch (action.type) {
+            case 'ADD_POST': {
+                let newPost: PostType = {
+                    id: v1(),
+                    message: this._state.profilePage.newPostText,
+                    likesCount: '0'
+                }
+                this._state.profilePage.posts.push(newPost)
+                this._state.profilePage.newPostText = ''
+                this._callSubscriber(this._state)
+                break
             }
+            case 'UPDATE_NEW_POST_TEXT': {
+                this._state.profilePage.newPostText = action.newText
+                this._callSubscriber(this._state)
+                break
+            }
+            case 'ADD_MESSAGE': {
+                let newMessage = {
+                    id: v1(),
+                    message: this._state.dialogsPage.newMessageText,
+                    author: {
+                        name: 'Vadim',
+                        src: 'https://i.pinimg.com/originals/f4/d2/96/f4d2961b652880be432fb9580891ed62.png'
+                    }
+                }
+                this._state.dialogsPage.messages.push(newMessage);
+                this._state.dialogsPage.newMessageText = ''
+                this._callSubscriber(this._state)
+                break
+            }
+            case 'UPDATE_NEW_MESSAGE_TEXT': {
+                this._state.dialogsPage.newMessageText = action.newMessageText
+                this._callSubscriber(this._state)
+                break
+            }
+            default:
+                throw new Error('Bad action')
         }
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.newMessageText = ''
-        this._callSubscriber(this._state)
-    },
-    updateNewMessageText(newMessageText: string) {
-        this._state.dialogsPage.newMessageText = newMessageText
-        this._callSubscriber(this._state)
     }
 }
+
+export const addPostAC = () => ({type: 'ADD_POST'}) as const
+
+export const updateNewPostTextAC = (e: ChangeEvent<HTMLTextAreaElement>) => ({
+    type: 'UPDATE_NEW_POST_TEXT',
+    newText: e.currentTarget.value
+}) as const
+
+export const addMessageAC = () => ({type: 'ADD_MESSAGE'}) as const
+
+export const updateNewMessageTextAC = (e: ChangeEvent<HTMLTextAreaElement>) => ({
+    type: 'UPDATE_NEW_MESSAGE_TEXT',
+    newMessageText: e.currentTarget.value
+}) as const
 
 export default store

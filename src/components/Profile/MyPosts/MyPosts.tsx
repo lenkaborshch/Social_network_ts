@@ -1,12 +1,11 @@
 import React, {ChangeEvent} from 'react';
 import style from './MyPosts.module.css';
 import Post from './Post/Post';
-import {ProfilePageType} from '../../../redux/state';
+import {ActionsTypes, addPostAC, ProfilePageType, updateNewPostTextAC} from '../../../redux/state';
 
 type MyPostsPropsType = {
     profilePage: ProfilePageType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 function MyPosts(props: MyPostsPropsType) {
@@ -15,10 +14,10 @@ function MyPosts(props: MyPostsPropsType) {
                                                                 likesCount={p.likesCount}/>);
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value);
+        props.dispatch(updateNewPostTextAC(e));
     }
     const addPost = () => {
-        props.addPost();
+        props.dispatch(addPostAC());
     }
 
     return (

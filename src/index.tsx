@@ -9,11 +9,10 @@ import {RootStateType} from './redux/state'
 import {HashRouter} from 'react-router-dom'
 
 
-export let rerenderEntireThree = (state: RootStateType) => {
+export const rerenderEntireThree = (state: RootStateType) => {
     ReactDOM.render(
         <HashRouter>
-            <App state={state} addPost={store.addPost.bind(store)} updateNewPostText={store.updateNewPostText.bind(store)}
-                 addMessage={store.addMessage.bind(store)} updateNewMessageText={store.updateNewMessageText.bind(store)}/>
+            <App state={state} dispatch={store.dispatch.bind(store)} />
         </HashRouter>,
         document.getElementById('root'))
 }
