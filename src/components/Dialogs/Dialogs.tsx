@@ -15,15 +15,6 @@ function Dialogs(props: DialogsPropsType) {
     const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
     const messagesElements = props.dialogsPage.messages.map(m => <Message key={m.id} message={m.message}
                                                                           author={m.author}/>)
-    /*
-
-        let [textMessage, setTextMessage] = useState('');
-
-        const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-            setTextMessage(e.currentTarget.value);
-            console.log(textMessage); //??????????????
-        }
-    */
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewMessageText(e.currentTarget.value)
