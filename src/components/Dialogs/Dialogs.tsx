@@ -1,8 +1,9 @@
 import React, {ChangeEvent} from 'react'
 import style from './Dialogs.module.css'
-import {ActionsTypes, addMessageAC, DialogsPageType, updateNewMessageTextAC,} from '../../redux/state'
+import {ActionsTypes, DialogsPageType} from '../../redux/state'
 import { DialogItem } from './DialogItem/DialogItem'
 import { Message } from './Message/Message'
+import {addMessageAC, updateNewMessageTextAC} from '../../redux/dialogsReducer';
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
@@ -36,7 +37,7 @@ export function Dialogs(props: DialogsPropsType) {
                               onChange={onChangeHandler}
                     />
                     <div>
-                        <button onClick={onSendMessageClick}>Sent</button>
+                        <button onClick={onSendMessageClick}>Send</button>
                     </div>
                 </div>
             </div>

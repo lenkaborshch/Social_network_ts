@@ -1,10 +1,6 @@
 import {v1} from 'uuid';
-import {ChangeEvent} from 'react';
-
-const ADD_POST = 'ADD_POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
-const SEND_MESSAGE = 'SEND_MESSAGE'
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
+import {addPostAC, profileReducer, updateNewPostTextAC} from './profileReducer';
+import {addMessageAC, dialogsReducer, updateNewMessageTextAC} from './dialogsReducer';
 
 export type PostType = {
     id: string
@@ -145,60 +141,11 @@ const store: StoreType = {
         this._callSubscriber = observer
     },
     dispatch(action) {
-        switch (action.type) {
-            case ADD_POST: {
-                let newPost: PostType = {
-                    id: v1(),
-                    message: this._state.profilePage.newPostText,
-                    likesCount: '0'
-                }
-                this._state.profilePage.posts.push(newPost)
-                this._state.profilePage.newPostText = ''
-                this._callSubscriber(this._state)
-                break
-            }
-            case UPDATE_NEW_POST_TEXT: {
-                this._state.profilePage.newPostText = action.newText
-                this._callSubscriber(this._state)
-                break
-            }
-            case SEND_MESSAGE: {
-                let newMessage = {
-                    id: v1(),
-                    message: this._state.dialogsPage.newMessageText,
-                    author: {
-                        name: 'Me',
-                        src: 'https://volyn.tabloyid.com/upload/news/1/2019-06/155980298916/1_worlds-most-beautiful-cats-1-57fb53b6755fc__700.jpg'
-                    }
-                }
-                this._state.dialogsPage.messages.push(newMessage);
-                this._state.dialogsPage.newMessageText = ''
-                this._callSubscriber(this._state)
-                break
-            }
-            case UPDATE_NEW_MESSAGE_TEXT: {
-                this._state.dialogsPage.newMessageText = action.newMessageText
-                this._callSubscriber(this._state)
-                break
-            }
-            default:
-                throw new Error('Bad action')
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+
+        this._callSubscriber(this._state)
     }
 }
-
-export const addPostAC = () => ({type: ADD_POST}) as const
-
-export const updateNewPostTextAC = (newPostText: string) => ({
-    type: UPDATE_NEW_POST_TEXT,
-    newText: newPostText
-}) as const
-
-export const addMessageAC = () => ({type: SEND_MESSAGE}) as const
-
-export const updateNewMessageTextAC = (newText: string) => ({
-    type: UPDATE_NEW_MESSAGE_TEXT,
-    newMessageText: newText
-}) as const
 
 export default store
