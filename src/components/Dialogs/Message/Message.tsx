@@ -7,7 +7,7 @@ type MessageType = {
     author: AuthorMessage
 }
 
-function Message(props: MessageType) {
+export function Message(props: MessageType) {
     return (
         <div className={style.wrapperMessage}>
             <img src={props.author.src} className={style.avatar} alt='authorImage'/>
@@ -20,5 +20,3 @@ function Message(props: MessageType) {
         </div>
     )
 }
-
-export default Message;

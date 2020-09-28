@@ -8,7 +8,7 @@ type NavbarPropsType = {
     state: SidebarType
 }
 
-function Navbar(props: NavbarPropsType) {
+export function Navbar(props: NavbarPropsType) {
     return (
         <nav className="nav">
             <div className={style.item}>
@@ -35,5 +35,3 @@ function Navbar(props: NavbarPropsType) {
         </nav>
     )
 }
-
-export default Navbar;

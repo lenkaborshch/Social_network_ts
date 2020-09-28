@@ -1,18 +1,18 @@
 import React from 'react'
 import './App.css'
-import Header from './components/Header/Header'
-import Navbar from './components/Navbar/Navbar'
-import Profile from './components/Profile/Profile'
-import Dialogs from './components/Dialogs/Dialogs'
 import {ActionsTypes, RootStateType} from './redux/state'
 import {Route} from 'react-router-dom'
+import { Navbar } from './components/Navbar/Navbar'
+import { Profile } from './components/Profile/Profile'
+import { Dialogs } from './components/Dialogs/Dialogs';
+import { Header } from './components/Header/Header';
 
 type AppPropsType = {
     state: RootStateType
     dispatch: (action: ActionsTypes) => void
 }
 
-function App(props: AppPropsType) {
+export function App(props: AppPropsType) {
     return (
         <div className='app-wrapper'>
             <Header/>
@@ -30,5 +30,3 @@ function App(props: AppPropsType) {
         </div>
     );
 }
-
-export default App

@@ -8,13 +8,13 @@ type MyPostsPropsType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-function MyPosts(props: MyPostsPropsType) {
+export function MyPosts(props: MyPostsPropsType) {
 
     const postsElement = props.profilePage.posts.map(p => <Post key={p.id} message={p.message}
                                                                 likesCount={p.likesCount}/>);
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewPostTextAC(e));
+        props.dispatch(updateNewPostTextAC(e.currentTarget.value));
     }
     const addPost = () => {
         props.dispatch(addPostAC());
@@ -39,5 +39,3 @@ function MyPosts(props: MyPostsPropsType) {
         </div>
     )
 }
-
-export default MyPosts;

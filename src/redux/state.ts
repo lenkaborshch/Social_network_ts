@@ -1,6 +1,11 @@
 import {v1} from 'uuid';
 import {ChangeEvent} from 'react';
 
+const ADD_POST = 'ADD_POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
+const SEND_MESSAGE = 'SEND_MESSAGE'
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
+
 export type PostType = {
     id: string
     message: string
@@ -51,10 +56,11 @@ export type RootStateType = {
 }
 
 export type ActionsTypes =
-    ReturnType<typeof addPostAC> // === addPostType = {type: 'ADD_POST'}; ReturnType - Создает тип, состоящий из возвращаемого типа функции Type.
+    ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof addMessageAC>
     | ReturnType<typeof updateNewMessageTextAC>
+// ReturnType<typeof addPostAC> === type addPostType = {type: 'ADD_POST'}; ReturnType - Создает тип, состоящий из возвращаемого типа функции Type.
 
 export type StoreType = {
     _state: RootStateType
@@ -140,7 +146,7 @@ const store: StoreType = {
     },
     dispatch(action) {
         switch (action.type) {
-            case 'ADD_POST': {
+            case ADD_POST: {
                 let newPost: PostType = {
                     id: v1(),
                     message: this._state.profilePage.newPostText,
@@ -151,18 +157,18 @@ const store: StoreType = {
                 this._callSubscriber(this._state)
                 break
             }
-            case 'UPDATE_NEW_POST_TEXT': {
+            case UPDATE_NEW_POST_TEXT: {
                 this._state.profilePage.newPostText = action.newText
                 this._callSubscriber(this._state)
                 break
             }
-            case 'ADD_MESSAGE': {
+            case SEND_MESSAGE: {
                 let newMessage = {
                     id: v1(),
                     message: this._state.dialogsPage.newMessageText,
                     author: {
-                        name: 'Vadim',
-                        src: 'https://i.pinimg.com/originals/f4/d2/96/f4d2961b652880be432fb9580891ed62.png'
+                        name: 'Me',
+                        src: 'https://volyn.tabloyid.com/upload/news/1/2019-06/155980298916/1_worlds-most-beautiful-cats-1-57fb53b6755fc__700.jpg'
                     }
                 }
                 this._state.dialogsPage.messages.push(newMessage);
@@ -170,7 +176,7 @@ const store: StoreType = {
                 this._callSubscriber(this._state)
                 break
             }
-            case 'UPDATE_NEW_MESSAGE_TEXT': {
+            case UPDATE_NEW_MESSAGE_TEXT: {
                 this._state.dialogsPage.newMessageText = action.newMessageText
                 this._callSubscriber(this._state)
                 break
@@ -181,18 +187,18 @@ const store: StoreType = {
     }
 }
 
-export const addPostAC = () => ({type: 'ADD_POST'}) as const
+export const addPostAC = () => ({type: ADD_POST}) as const
 
-export const updateNewPostTextAC = (e: ChangeEvent<HTMLTextAreaElement>) => ({
-    type: 'UPDATE_NEW_POST_TEXT',
-    newText: e.currentTarget.value
+export const updateNewPostTextAC = (newPostText: string) => ({
+    type: UPDATE_NEW_POST_TEXT,
+    newText: newPostText
 }) as const
 
-export const addMessageAC = () => ({type: 'ADD_MESSAGE'}) as const
+export const addMessageAC = () => ({type: SEND_MESSAGE}) as const
 
-export const updateNewMessageTextAC = (e: ChangeEvent<HTMLTextAreaElement>) => ({
-    type: 'UPDATE_NEW_MESSAGE_TEXT',
-    newMessageText: e.currentTarget.value
+export const updateNewMessageTextAC = (newText: string) => ({
+    type: UPDATE_NEW_MESSAGE_TEXT,
+    newMessageText: newText
 }) as const
 
 export default store

@@ -1,25 +1,25 @@
 import React, {ChangeEvent} from 'react'
 import style from './Dialogs.module.css'
-import DialogItem from './DialogItem/DialogItem'
-import Message from './Message/Message'
 import {ActionsTypes, addMessageAC, DialogsPageType, updateNewMessageTextAC,} from '../../redux/state'
+import { DialogItem } from './DialogItem/DialogItem'
+import { Message } from './Message/Message'
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
     dispatch: (action: ActionsTypes) => void
 }
 
-function Dialogs(props: DialogsPropsType) {
+export function Dialogs(props: DialogsPropsType) {
 
     const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
     const messagesElements = props.dialogsPage.messages.map(m => <Message key={m.id} message={m.message}
                                                                           author={m.author}/>)
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewMessageTextAC(e))
+        props.dispatch(updateNewMessageTextAC(e.currentTarget.value))
     }
 
-    const sentMessage = () => {
+    const onSendMessageClick = () => {
         props.dispatch(addMessageAC())
     }
 
@@ -29,17 +29,17 @@ function Dialogs(props: DialogsPropsType) {
                 {dialogsElements}
             </div>
             <div className={style.messages}>
-                {messagesElements}
+                <div>{messagesElements}</div>
                 <div className={style.sendingMessage}>
                     <textarea placeholder='Write your message'
                               value={props.dialogsPage.newMessageText}
                               onChange={onChangeHandler}
                     />
-                    <button onClick={sentMessage}>Sent</button>
+                    <div>
+                        <button onClick={onSendMessageClick}>Sent</button>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
-
-export default Dialogs
