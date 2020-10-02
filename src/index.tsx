@@ -1,11 +1,11 @@
 import './index.css'
-import store from './redux/state'
+import {store} from './redux/reduxStore'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import * as serviceWorker from './serviceWorker'
 import {App} from './App'
-import {RootStateType} from './redux/state'
+import {RootStateType} from './redux/reduxStore'
 import {HashRouter} from 'react-router-dom'
 
 
@@ -16,8 +16,12 @@ export const rerenderEntireThree = (state: RootStateType) => {
         </HashRouter>,
         document.getElementById('root'))
 }
+
 rerenderEntireThree(store.getState())
-store.subscribe(rerenderEntireThree)
+store.subscribe(() => {
+    const state = store.getState()
+    rerenderEntireThree(state)
+})
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

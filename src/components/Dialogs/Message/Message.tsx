@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './Message.module.css';
-import {AuthorMessage} from '../../../redux/state';
+import {AuthorMessage} from '../../../redux/dialogsReducer';
 
 type MessageType = {
     message: string

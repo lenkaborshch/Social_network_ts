@@ -2,56 +2,56 @@ import {v1} from 'uuid';
 import {addPostAC, profileReducer, updateNewPostTextAC} from './profileReducer';
 import {addMessageAC, dialogsReducer, updateNewMessageTextAC} from './dialogsReducer';
 
-export type PostType = {
+type PostType = {
     id: string
     message: string
     likesCount: string
 }
 
-export type DialogType = {
+type DialogType = {
     id: string
     name: string
 }
 
-export type AuthorMessage = {
+type AuthorMessage = {
     name: string
     src: string
 }
 
-export type MessageType = {
+type MessageType = {
     id: string
     message: string
     author: AuthorMessage
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
 }
 
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageText: string
 }
 
-export type FriendType = {
+type FriendType = {
     id: string
     name: string
     src: string
 }
 
-export type SidebarType = {
+type SidebarType = {
     friends: Array<FriendType>
 }
 
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: SidebarType
 }
 
-export type ActionsTypes =
+type ActionsTypes =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof addMessageAC>
@@ -147,5 +147,3 @@ const store: StoreType = {
         this._callSubscriber(this._state)
     }
 }
-
-export default store

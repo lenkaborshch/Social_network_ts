@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import {ActionsTypes, RootStateType} from './redux/state'
+import {ActionsTypes, RootStateType} from './redux/reduxStore'
 import {Route} from 'react-router-dom'
 import { Navbar } from './components/Navbar/Navbar'
 import { Profile } from './components/Profile/Profile'

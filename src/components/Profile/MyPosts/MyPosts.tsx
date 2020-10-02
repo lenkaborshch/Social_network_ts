@@ -1,8 +1,9 @@
 import React, {ChangeEvent} from 'react';
 import style from './MyPosts.module.css';
 import Post from './Post/Post';
-import {ActionsTypes, ProfilePageType} from '../../../redux/state';
+import {ProfilePageType} from '../../../redux/profileReducer';
 import {addPostAC, updateNewPostTextAC} from '../../../redux/profileReducer';
+import {ActionsTypes} from '../../../redux/reduxStore';
 
 type MyPostsPropsType = {
     profilePage: ProfilePageType
@@ -17,8 +18,16 @@ export function MyPosts(props: MyPostsPropsType) {
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.dispatch(updateNewPostTextAC(e.currentTarget.value));
     }
-    const addPost = () => {
+
+    const onClickAddPost = () => {
         props.dispatch(addPostAC());
+    }
+
+    const onPressEnterAddPost = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            props.dispatch(addPostAC())
+        }
     }
 
     return (
@@ -28,9 +37,10 @@ export function MyPosts(props: MyPostsPropsType) {
                 <textarea placeholder='Write your post message'
                           value={props.profilePage.newPostText}
                           onChange={onChangeHandler}
+                          onKeyPress={onPressEnterAddPost}
                 />
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onClickAddPost}>Add post</button>
                     <button>Remove</button>
                 </div>
             </div>
