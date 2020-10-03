@@ -12,7 +12,7 @@ import {HashRouter} from 'react-router-dom'
 export const rerenderEntireThree = (state: RootStateType) => {
     ReactDOM.render(
         <HashRouter>
-            <App state={state} dispatch={store.dispatch.bind(store)} />
+            <App state={state} dispatch={store.dispatch.bind(store)} store={store}/>
         </HashRouter>,
         document.getElementById('root'))
 }

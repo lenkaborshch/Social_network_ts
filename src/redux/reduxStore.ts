@@ -9,14 +9,6 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 
-export type StoreType = {
-    _state: RootStateType
-    _callSubscriber: (state: RootStateType) => void
-    getState: () => RootStateType
-    subscribe: (observer: (state: RootStateType) => void) => void
-    dispatch: (action: ActionsTypes) => void
-}
-
 export type ActionsTypes =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewPostTextAC>

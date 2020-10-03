@@ -1,35 +1,35 @@
 import React, {ChangeEvent} from 'react'
 import style from './Dialogs.module.css'
-import {DialogsPageType} from '../../redux/dialogsReducer'
+import {DialogsPageType, DialogType, MessageType} from '../../redux/dialogsReducer'
 import { DialogItem } from './DialogItem/DialogItem'
 import { Message } from './Message/Message'
-import {addMessageAC, updateNewMessageTextAC} from '../../redux/dialogsReducer';
-import { ActionsTypes } from '../../redux/reduxStore'
-import {addPostAC} from '../../redux/profileReducer';
 
 type DialogsPropsType = {
-    dialogsPage: DialogsPageType
-    dispatch: (action: ActionsTypes) => void
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+    newMessageText: string
+    updateNewMessageText: (value: string) => void
+    addMessage: () => void
 }
 
 export function Dialogs(props: DialogsPropsType) {
 
-    const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
-    const messagesElements = props.dialogsPage.messages.map(m => <Message key={m.id} message={m.message}
+    const dialogsElements = props.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
+    const messagesElements = props.messages.map(m => <Message key={m.id} message={m.message}
                                                                           author={m.author}/>)
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewMessageTextAC(e.currentTarget.value))
+        props.updateNewMessageText(e.currentTarget.value)
     }
 
     const onSendMessageClick = () => {
-        props.dispatch(addMessageAC())
+        props.addMessage()
     }
 
     const onPressEnterSendMessage = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            props.dispatch(addMessageAC())
+            props.addMessage()
         }
     }
 
@@ -42,7 +42,7 @@ export function Dialogs(props: DialogsPropsType) {
                 <div>{messagesElements}</div>
                 <div className={style.sendingMessage}>
                     <textarea placeholder='Write your message'
-                              value={props.dialogsPage.newMessageText}
+                              value={props.newMessageText}
                               onChange={onChangeHandler}
                               onKeyDown={onPressEnterSendMessage}
                     />
