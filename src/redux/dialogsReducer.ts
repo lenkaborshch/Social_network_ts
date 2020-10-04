@@ -1,32 +1,10 @@
 import {v1} from 'uuid';
 import {ActionsTypes} from './reduxStore';
 
-export type DialogType = {
-    id: string
-    name: string
-}
-
-export type AuthorMessage = {
-    name: string
-    src: string
-}
-
-export type MessageType = {
-    id: string
-    message: string
-    author: AuthorMessage
-}
-
-export type DialogsPageType = {
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-    newMessageText: string
-}
-
 const SEND_MESSAGE = 'SEND_MESSAGE'
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
 
-const initialState: DialogsPageType = {
+const initialState = {
     dialogs: [
         {id: v1(), name: 'Vadim'},
         {id: v1(), name: 'Mama'},
@@ -63,7 +41,9 @@ const initialState: DialogsPageType = {
     newMessageText: ''
 }
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes) => {
+export type DialogsPageType = typeof initialState
+
+export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
     switch (action.type) {
         case SEND_MESSAGE: {
             let newMessage = {
@@ -74,22 +54,35 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
                     src: 'https://volyn.tabloyid.com/upload/news/1/2019-06/155980298916/1_worlds-most-beautiful-cats-1-57fb53b6755fc__700.jpg'
                 }
             }
-            state.messages.push(newMessage);
-            state.newMessageText = ''
-            return state
+            return {
+                ...state,
+                newMessageText: '',
+                messages: [...state.messages, newMessage]
+            }
         }
         case UPDATE_NEW_MESSAGE_TEXT: {
-            state.newMessageText = action.newMessageText
-            return state
+            return {
+                ...state,
+                newMessageText: action.newMessageText
+            }
         }
         default:
             return state
     }
 }
 
-export const addMessageAC = () => ({type: SEND_MESSAGE}) as const
+export const addMessageAC = (): AddMessageActionType => ({type: SEND_MESSAGE})
 
-export const updateNewMessageTextAC = (newText: string) => ({
+export const updateNewMessageTextAC = (newMessageText: string): UpdateNewMessageTextActionType => ({
     type: UPDATE_NEW_MESSAGE_TEXT,
-    newMessageText: newText
-}) as const
+    newMessageText
+})
+
+type AddMessageActionType = {
+    type: typeof SEND_MESSAGE
+}
+
+type UpdateNewMessageTextActionType = {
+    type: typeof UPDATE_NEW_MESSAGE_TEXT
+    newMessageText: string
+}

@@ -1,10 +1,11 @@
 import React from 'react';
 import style from './Message.module.css';
-import {AuthorMessage} from '../../../redux/dialogsReducer';
+import {AuthorMessageType} from './../DialogsContainer';
 
 type MessageType = {
+    id: string
     message: string
-    author: AuthorMessage
+    author: AuthorMessageType
 }
 
 export function Message(props: MessageType) {

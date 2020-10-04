@@ -1,8 +1,8 @@
 import React, {ChangeEvent} from 'react'
 import style from './Dialogs.module.css'
-import {DialogsPageType, DialogType, MessageType} from '../../redux/dialogsReducer'
-import { DialogItem } from './DialogItem/DialogItem'
-import { Message } from './Message/Message'
+import {DialogType, MessageType} from './DialogsContainer'
+import {DialogItem} from './DialogItem/DialogItem'
+import {Message} from './Message/Message'
 
 type DialogsPropsType = {
     dialogs: Array<DialogType>
@@ -15,8 +15,8 @@ type DialogsPropsType = {
 export function Dialogs(props: DialogsPropsType) {
 
     const dialogsElements = props.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
-    const messagesElements = props.messages.map(m => <Message key={m.id} message={m.message}
-                                                                          author={m.author}/>)
+    const messagesElements = props.messages.map(m => <Message key={m.id} id={m.id} message={m.message}
+                                                              author={m.author}/>)
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewMessageText(e.currentTarget.value)

@@ -1,13 +1,13 @@
 import React from 'react';
 import style from './Sidebar.module.css';
-import {SidebarType} from '../../../redux/sidebarReducer';
+import {FriendType} from '../../../redux/sidebarReducer';
 
 type SidebarPropsType = {
-    state: SidebarType
+    friends: Array<FriendType>
 }
 
-function Sidebar(props: SidebarPropsType) {
-    let sidebarFriends = props.state.friends.map(f => {
+export function Sidebar(props: SidebarPropsType) {
+    let sidebarFriends = props.friends.map(f => {
         return (
             <div className={style.sidebarFriend} key={f.id}>
                 <img src={f.src} alt='friendsPhoto'/>
@@ -22,5 +22,3 @@ function Sidebar(props: SidebarPropsType) {
         </div>
     )
 }
-
-export default Sidebar;
