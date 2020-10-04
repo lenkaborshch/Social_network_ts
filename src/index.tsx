@@ -5,23 +5,22 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import * as serviceWorker from './serviceWorker'
 import {App} from './App'
-import {RootStateType} from './redux/reduxStore'
 import {HashRouter} from 'react-router-dom'
+import {Provider} from "./StoreContext";
 
 
-export const rerenderEntireThree = (state: RootStateType) => {
+export const rerenderEntireThree = () => {
     ReactDOM.render(
         <HashRouter>
-            <App state={state} dispatch={store.dispatch.bind(store)} store={store}/>
+            <Provider store={store}>
+                <App />
+            </Provider>
         </HashRouter>,
         document.getElementById('root'))
 }
 
-rerenderEntireThree(store.getState())
-store.subscribe(() => {
-    const state = store.getState()
-    rerenderEntireThree(state)
-})
+rerenderEntireThree()
+store.subscribe(rerenderEntireThree)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

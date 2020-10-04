@@ -1,6 +1,6 @@
-import cover from '../../../img/cover.jpg';
-import React from 'react';
-import style from './ProfileInfo.module.css';
+import cover from '../../../img/cover.jpg'
+import React from 'react'
+import style from './ProfileInfo.module.css'
 
 function ProfileInfo() {
     return (

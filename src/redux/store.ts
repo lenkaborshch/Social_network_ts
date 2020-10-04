@@ -58,7 +58,7 @@ type ActionsTypes =
     | ReturnType<typeof updateNewMessageTextAC>
 // ReturnType<typeof addPostAC> === type addPostType = {type: 'ADD_POST'}; ReturnType - Создает тип, состоящий из возвращаемого типа функции Type.
 
-export type StoreType = {
+type StoreType = {
     _state: RootStateType
     _callSubscriber: (state: RootStateType) => void
     getState: () => RootStateType

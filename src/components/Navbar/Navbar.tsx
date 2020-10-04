@@ -1,12 +1,9 @@
-import React from 'react';
-import style from './Navbar.module.css';
-import {NavLink} from 'react-router-dom';
-import Sidebar from './Sidebar/Sidebar';
-import {SidebarType} from '../../redux/sidebarReducer';
+import React from 'react'
+import style from './Navbar.module.css'
+import {NavLink} from 'react-router-dom'
+import {SidebarContainer} from "./Sidebar/SidebarContainer"
 
-type NavbarPropsType = {
-    state: SidebarType
-}
+type NavbarPropsType = {}
 
 export function Navbar(props: NavbarPropsType) {
     return (
@@ -30,7 +27,7 @@ export function Navbar(props: NavbarPropsType) {
                 <NavLink to='/users' activeClassName={style.active}>Users</NavLink>
             </div>
             <div>
-                <Sidebar state={props.state}/>
+                <SidebarContainer/>
             </div>
         </nav>
     )

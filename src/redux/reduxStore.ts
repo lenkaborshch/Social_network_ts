@@ -15,10 +15,18 @@ export type ActionsTypes =
     | ReturnType<typeof addMessageAC>
     | ReturnType<typeof updateNewMessageTextAC>
 
+export type StoreType = {
+    _state: RootStateType
+    _callSubscriber: (state: RootStateType) => void
+    getState: () => RootStateType
+    subscribe: (observer: (state: RootStateType) => void) => void
+    dispatch: (action: ActionsTypes) => void
+}
+
 const reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer
 })
 
-export const store = createStore(reducers)
+export const store: StoreType = createStore(reducers)
