@@ -4,12 +4,11 @@ import {Route} from 'react-router-dom'
 import {Navbar} from './components/Navbar/Navbar'
 import {Profile} from './components/Profile/Profile'
 import {Header} from './components/Header/Header'
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer"
 import { UsersContainer } from './components/Users/UsersContainer'
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer"
 
-type AppPropsType = {}
 
-export function App(props: AppPropsType) {
+export function App() {
     return (
         <div className='app-wrapper'>
             <Header/>
