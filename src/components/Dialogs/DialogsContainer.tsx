@@ -1,8 +1,7 @@
-import React from 'react'
 import {addMessageAC, updateNewMessageTextAC} from '../../redux/dialogsReducer'
 import {Dialogs} from './Dialogs'
-import {connect} from "react-redux"
-import {ActionsTypes, AppStateType} from "../../redux/reduxStore"
+import {connect} from 'react-redux'
+import {ActionsTypes, AppStateType} from '../../redux/reduxStore'
 
 export type AuthorMessageType = {
     name: string

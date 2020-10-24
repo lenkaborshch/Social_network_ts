@@ -1,6 +1,5 @@
 .header {
     grid-area: h;
-    /*position: sticky;*/
     top: 0;
     background-color: #7a7cff;
 }

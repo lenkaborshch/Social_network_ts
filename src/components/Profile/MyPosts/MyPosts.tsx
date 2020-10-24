@@ -1,12 +1,7 @@
-import React, {ChangeEvent} from 'react';
-import style from './MyPosts.module.css';
-import Post from './Post/Post';
-import {ProfilePageType, PostType} from '../../../redux/profileReducer';
-import {addPostAC, updateNewPostTextAC} from '../../../redux/profileReducer';
-import {ActionsTypes} from '../../../redux/reduxStore';
-import {CombinedState, Store} from "redux";
-import {DialogsPageType} from "../../../redux/dialogsReducer";
-import {SidebarType} from "../../../redux/sidebarReducer";
+import React, {ChangeEvent} from 'react'
+import style from './MyPosts.module.css'
+import Post from './Post/Post'
+import {PostType} from '../../../redux/profileReducer'
 
 type MyPostsPropsType = {
     newPostText: string
@@ -18,7 +13,7 @@ type MyPostsPropsType = {
 export function MyPosts(props: MyPostsPropsType) {
 
     const postsElement = props.posts.map(p => <Post key={p.id} message={p.message}
-                                                    likesCount={p.likesCount}/>);
+                                                    likesCount={p.likesCount}/>)
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewPostText(e.currentTarget.value)

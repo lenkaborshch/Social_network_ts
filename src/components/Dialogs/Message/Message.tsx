@@ -1,6 +1,6 @@
-import React from 'react';
-import style from './Message.module.css';
-import {AuthorMessageType} from './../DialogsContainer';
+import React from 'react'
+import style from './Message.module.css'
+import {AuthorMessageType} from '../DialogsContainer'
 
 type MessageType = {
     id: string

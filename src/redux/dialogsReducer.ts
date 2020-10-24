@@ -1,5 +1,5 @@
-import {v1} from 'uuid';
-import {ActionsTypes} from './reduxStore';
+import {v1} from 'uuid'
+import {ActionsTypes} from './reduxStore'
 
 const SEND_MESSAGE = 'SEND_MESSAGE'
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'

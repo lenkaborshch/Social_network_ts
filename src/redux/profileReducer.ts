@@ -1,4 +1,4 @@
-import {ActionsTypes} from './reduxStore';
+import {ActionsTypes} from './reduxStore'
 import {v1} from 'uuid'
 
 const ADD_POST = 'ADD_POST'

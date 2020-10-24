@@ -1,6 +1,6 @@
-import {v1} from 'uuid';
-import {addPostAC, profileReducer, updateNewPostTextAC} from './profileReducer';
-import {addMessageAC, dialogsReducer, updateNewMessageTextAC} from './dialogsReducer';
+import {v1} from 'uuid'
+import {addPostAC, profileReducer, updateNewPostTextAC} from './profileReducer'
+import {addMessageAC, dialogsReducer, updateNewMessageTextAC} from './dialogsReducer'
 
 type PostType = {
     id: string

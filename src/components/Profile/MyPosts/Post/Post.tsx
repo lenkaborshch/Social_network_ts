@@ -1,6 +1,6 @@
-import React from 'react';
-import style from './Post.module.css';
-import post_image from './../../../../img/penguin.png';
+import React from 'react'
+import style from './Post.module.css'
+import post_image from './../../../../img/penguin.png'
 
 type PostPropsType = {
     message: string
@@ -19,4 +19,4 @@ function Post(props: PostPropsType) {
     )
 }
 
-export default Post;
+export default Post

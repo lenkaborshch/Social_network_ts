@@ -1,5 +1,5 @@
-import {v1} from "uuid"
-import { addMessageAC, dialogsReducer, DialogsPageType, updateNewMessageTextAC } from "./dialogsReducer"
+import {v1} from 'uuid'
+import {addMessageAC, dialogsReducer, DialogsPageType, updateNewMessageTextAC} from './dialogsReducer'
 
 let startState: DialogsPageType
 

@@ -1,5 +1,5 @@
-import {ActionsTypes} from './reduxStore';
-import {v1} from 'uuid';
+import {ActionsTypes} from './reduxStore'
+import {v1} from 'uuid'
 
 export type FriendType = {
     id: string
@@ -29,6 +29,6 @@ const initialState = {
 
 export type SidebarType = typeof initialState
 
-export const sidebarReducer = (state = initialState, action: ActionsTypes) => {
+export const sidebarReducer = (state: SidebarType = initialState, action: ActionsTypes): SidebarType => {
     return state
 }

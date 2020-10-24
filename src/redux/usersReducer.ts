@@ -1,4 +1,4 @@
-import {ActionsTypes} from './reduxStore';
+import {ActionsTypes} from './reduxStore'
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -7,19 +7,20 @@ const SET_USERS = 'SET_USERS'
 const initialState = {
     users: [] as Array<UserType>
 }
+export type UserType = {
+    name: string
+    id: number
+    uniqueUrlName: string | null
+    photos: {
+        small: string | null
+        large: string | null
+    }
+    status: string | null
+    followed: boolean
+}
 
 export type UsersPageType = typeof initialState
-export type UserType = {
-    id: string
-    followed: boolean
-    fullName: string
-    photoUrl: string
-    status: string
-    location: {
-        city: string
-        country: string
-    }
-}
+
 
 export const usersReducer = (state: UsersPageType = initialState, action: ActionsTypes): UsersPageType => {
     switch (action.type) {
@@ -54,18 +55,18 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
     }
 }
 
-export const followAC = (userId: string): FollowActionType => ({type: FOLLOW, userId})
-export const unfollowAC = (userId: string): UnollowActionType => ({type: UNFOLLOW, userId})
+export const followAC = (userId: number): FollowActionType => ({type: FOLLOW, userId})
+export const unfollowAC = (userId: number): UnollowActionType => ({type: UNFOLLOW, userId})
 export const setUsersAC = (users: Array<UserType>): SetUsersActionType => ({type: SET_USERS, users})
 
 type FollowActionType = {
     type: typeof FOLLOW
-    userId: string
+    userId: number
 }
 
 type UnollowActionType = {
     type: typeof UNFOLLOW
-    userId: string
+    userId: number
 }
 
 type SetUsersActionType = {

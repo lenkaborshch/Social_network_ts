@@ -2,9 +2,9 @@ import React, {ChangeEvent} from 'react'
 import style from './../Dialogs/Dialogs.module.css'
 import {DialogItem} from '../Dialogs/DialogItem/DialogItem'
 import {Message} from '../Dialogs/Message/Message'
-import {useSelector} from "react-redux"
-import {selectDialogsPage, useDispatch} from "../../redux/reduxStore"
-import {updateNewMessageTextAC, addMessageAC} from "../../redux/dialogsReducer"
+import {useSelector} from 'react-redux'
+import {selectDialogsPage, useDispatch} from '../../redux/reduxStore'
+import {updateNewMessageTextAC, addMessageAC} from '../../redux/dialogsReducer'
 
 export function DialogsWithHooks() {
 

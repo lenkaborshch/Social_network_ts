@@ -1,7 +1,7 @@
 .sidebarWrapper {
     margin-top: 50px;
     text-align: center;
-    background-color: rgba(143,206,255,0.43);
+    background-color: rgba(143, 206, 255, 0.43);
 }
 
 .sidebarFriend {
@@ -13,9 +13,9 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 2px double rgba(143,206,255);
+    border: 2px double rgba(143, 206, 255, 1.0);
 }
 
 .friendName {
-    margin: 0px;
+    margin: 0;
 }

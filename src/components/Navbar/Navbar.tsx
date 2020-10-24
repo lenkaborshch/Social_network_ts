@@ -1,11 +1,10 @@
 import React from 'react'
 import style from './Navbar.module.css'
 import {NavLink} from 'react-router-dom'
-import {SidebarContainer} from "./Sidebar/SidebarContainer"
+import {SidebarContainer} from './Sidebar/SidebarContainer'
 
-type NavbarPropsType = {}
 
-export function Navbar(props: NavbarPropsType) {
+export function Navbar() {
     return (
         <nav className="nav">
             <div className={style.item}>
