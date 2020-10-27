@@ -1,6 +1,6 @@
 import {v1} from 'uuid'
-import {addPostAC, profileReducer, updateNewPostTextAC} from './profileReducer'
-import {addMessageAC, dialogsReducer, updateNewMessageTextAC} from './dialogsReducer'
+import {addPost, profileReducer, updateNewPostText} from './profileReducer'
+import {addMessage, dialogsReducer, updateNewMessageText} from './dialogsReducer'
 
 type PostType = {
     id: string
@@ -52,10 +52,10 @@ type RootStateType = {
 }
 
 type ActionsTypes =
-    ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostTextAC>
-    | ReturnType<typeof addMessageAC>
-    | ReturnType<typeof updateNewMessageTextAC>
+    ReturnType<typeof addPost>
+    | ReturnType<typeof updateNewPostText>
+    | ReturnType<typeof addMessage>
+    | ReturnType<typeof updateNewMessageText>
 // ReturnType<typeof addPostAC> === type addPostType = {type: 'ADD_POST'}; ReturnType - Создает тип, состоящий из возвращаемого типа функции Type.
 
 type StoreType = {

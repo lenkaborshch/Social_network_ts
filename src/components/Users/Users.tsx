@@ -1,6 +1,7 @@
 import React from 'react'
 import {UserType} from '../../redux/usersReducer'
 import style from './Users.module.css'
+import {Preloader} from '../common/Preloader/Preloader'
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -10,6 +11,7 @@ type UsersPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     onPageChanged: (page: number) => void
+    isFetching: boolean
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -18,6 +20,24 @@ export const Users = (props: UsersPropsType) => {
     for (let i = 1; i <= 15; i++) { //вместо pagesCount будет 15, чтобы не показывать все страницы
         pages.push(i)
     }
+    const users = props.users.map((u) => {
+        return (
+            <div key={u.id}>
+                <div>
+                    <img width='200px' alt='userPhoto' src={u.photos.small
+                        ? u.photos.small
+                        : 'https://i.pinimg.com/originals/8e/b0/fd/8eb0fdac7230089db2fa51f53e53397e.jpg'}/>
+                </div>
+                {u.followed
+                    ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>
+                    : <button onClick={() => props.follow(u.id)}>Follow</button>}
+                <div>{u.name}</div>
+                <div>{u.status}</div>
+                <div>u.location.city</div>
+                <div>u.location.country</div>
+            </div>
+        )
+    })
     return (
         <div>
             <div>
@@ -34,24 +54,9 @@ export const Users = (props: UsersPropsType) => {
                 }
             </div>
             {
-                props.users.map((u) => {
-                    return (
-                        <div key={u.id}>
-                            <div>
-                                <img width='200px' alt='userPhoto' src={u.photos.small
-                                    ? u.photos.small
-                                    : 'https://i.pinimg.com/originals/8e/b0/fd/8eb0fdac7230089db2fa51f53e53397e.jpg'}/>
-                            </div>
-                            {u.followed
-                                ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>
-                                : <button onClick={() => props.follow(u.id)}>Follow</button>}
-                            <div>{u.name}</div>
-                            <div>{u.status}</div>
-                            <div>u.location.city</div>
-                            <div>u.location.country</div>
-                        </div>
-                    )
-                })
+                props.isFetching
+                    ? <Preloader/>
+                    : <div> {users} </div>
             }
         </div>
     )

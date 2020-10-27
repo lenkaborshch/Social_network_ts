@@ -1,5 +1,5 @@
 import {v1} from 'uuid'
-import {addPostAC, ProfilePageType, profileReducer, updateNewPostTextAC} from './profileReducer'
+import {addPost, ProfilePageType, profileReducer, updateNewPostText} from './profileReducer'
 
 let startState: ProfilePageType
 
@@ -15,7 +15,7 @@ beforeEach(() => {
 
 test('correct message should be send in messages array', () => {
 
-    const action = addPostAC()
+    const action = addPost()
     const endState = profileReducer(startState, action)
 
     expect(endState.posts.length).toBe(3)
@@ -26,7 +26,7 @@ test('correct message should be send in messages array', () => {
 
 test('new message should be update', () => {
 
-    const action = updateNewPostTextAC('Hello my world!')
+    const action = updateNewPostText('Hello my world!')
     const endState = profileReducer(startState, action)
 
     expect(endState.newPostText).toBe('Hello my world!')

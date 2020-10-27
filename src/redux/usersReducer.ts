@@ -5,6 +5,7 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 export type UserType = {
     name: string
@@ -21,7 +22,8 @@ const initialState = {
     users: [] as Array<UserType>,
     totalCount: 0,
     pageSize: 5,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
 }
 
 export type UsersPageType = typeof initialState
@@ -60,17 +62,21 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
         case SET_CURRENT_PAGE: {
             return {...state, currentPage: action.currentPage}
         }
+        case TOGGLE_IS_FETCHING: {
+            return {...state, isFetching: action.isFetching}
+        }
         default: {
             return state
         }
     }
 }
 
-export const followAC = (userId: number): FollowActionType => ({type: FOLLOW, userId})
-export const unfollowAC = (userId: number): UnollowActionType => ({type: UNFOLLOW, userId})
-export const setUsersAC = (users: Array<UserType>): SetUsersActionType => ({type: SET_USERS, users})
-export const setTotalCountAC = (totalCount: number): setTotalCountActionType => ({type: SET_TOTAL_COUNT, totalCount})
-export const setCurrentPageAC = (currentPage: number): setCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
+export const follow = (userId: number): FollowActionType => ({type: FOLLOW, userId})
+export const unfollow = (userId: number): UnollowActionType => ({type: UNFOLLOW, userId})
+export const setUsers = (users: Array<UserType>): SetUsersActionType => ({type: SET_USERS, users})
+export const setTotalCount = (totalCount: number): setTotalCountActionType => ({type: SET_TOTAL_COUNT, totalCount})
+export const setCurrentPage = (currentPage: number): setCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
+export const toggleIsFetching = (isFetching: boolean): toggleIsFetchingActionType => ({type: TOGGLE_IS_FETCHING, isFetching})
 
 type FollowActionType = {
     type: typeof FOLLOW
@@ -95,4 +101,9 @@ type setTotalCountActionType = {
 type setCurrentPageActionType = {
     type: typeof SET_CURRENT_PAGE
     currentPage: number
+}
+
+type toggleIsFetchingActionType = {
+    type: typeof TOGGLE_IS_FETCHING
+    isFetching: boolean
 }

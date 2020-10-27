@@ -1,7 +1,7 @@
-import {addMessageAC, updateNewMessageTextAC} from '../../redux/dialogsReducer'
+import {addMessage, updateNewMessageText} from '../../redux/dialogsReducer'
 import {Dialogs} from './Dialogs'
 import {connect} from 'react-redux'
-import {ActionsTypes, AppStateType} from '../../redux/reduxStore'
+import {AppStateType} from '../../redux/reduxStore'
 
 export type AuthorMessageType = {
     name: string
@@ -36,14 +36,5 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     newMessageText: state.dialogsPage.newMessageText
 })
 
-const mapDispatchToProps = (dispatch: (action: ActionsTypes) => void): MapDispatchType => ({
-    updateNewMessageText(value: string) {
-        dispatch(updateNewMessageTextAC(value))
-    },
-    addMessage() {
-        dispatch(addMessageAC())
-    }
-})
-
 export const DialogsContainer = connect<MapStatePropsType, MapDispatchType, {}, AppStateType>
-(mapStateToProps, mapDispatchToProps)(Dialogs)
+(mapStateToProps, {updateNewMessageText, addMessage})(Dialogs)

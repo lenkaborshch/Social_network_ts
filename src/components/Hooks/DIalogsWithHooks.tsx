@@ -4,7 +4,7 @@ import {DialogItem} from '../Dialogs/DialogItem/DialogItem'
 import {Message} from '../Dialogs/Message/Message'
 import {useSelector} from 'react-redux'
 import {selectDialogsPage, useDispatch} from '../../redux/reduxStore'
-import {updateNewMessageTextAC, addMessageAC} from '../../redux/dialogsReducer'
+import {updateNewMessageText, addMessage} from '../../redux/dialogsReducer'
 
 export function DialogsWithHooks() {
 
@@ -16,17 +16,17 @@ export function DialogsWithHooks() {
                                                         author={m.author}/>)
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(updateNewMessageTextAC(e.currentTarget.value))
+        dispatch(updateNewMessageText(e.currentTarget.value))
     }
 
     const onSendMessageClick = () => {
-        dispatch(addMessageAC())
+        dispatch(addMessage())
     }
 
     const onPressEnterSendMessage = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            dispatch(addMessageAC())
+            dispatch(addMessage())
         }
     }
 

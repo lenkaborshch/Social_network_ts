@@ -1,20 +1,21 @@
 import {combineReducers, createStore} from 'redux'
-import {addPostAC, profileReducer, updateNewPostTextAC} from './profileReducer'
-import {addMessageAC, dialogsReducer, updateNewMessageTextAC} from './dialogsReducer'
+import {addPost, profileReducer, updateNewPostText} from './profileReducer'
+import {addMessage, dialogsReducer, updateNewMessageText} from './dialogsReducer'
 import {sidebarReducer} from './sidebarReducer'
-import {followAC, setCurrentPageAC, setTotalCountAC, setUsersAC, unfollowAC, usersReducer} from './usersReducer'
+import {follow, setCurrentPage, setTotalCount, setUsers, toggleIsFetching, unfollow, usersReducer} from './usersReducer'
 import {useDispatch as _useDispatch} from 'react-redux'
 
 export type ActionsTypes =
-    ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostTextAC>
-    | ReturnType<typeof addMessageAC>
-    | ReturnType<typeof updateNewMessageTextAC>
-    | ReturnType<typeof followAC>
-    | ReturnType<typeof unfollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setTotalCountAC>
-    | ReturnType<typeof setCurrentPageAC>
+    ReturnType<typeof addPost>
+    | ReturnType<typeof updateNewPostText>
+    | ReturnType<typeof addMessage>
+    | ReturnType<typeof updateNewMessageText>
+    | ReturnType<typeof follow>
+    | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setTotalCount>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof toggleIsFetching>
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
