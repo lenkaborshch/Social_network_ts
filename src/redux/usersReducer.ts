@@ -19,7 +19,7 @@ export type UserType = {
     followed: boolean
 }
 const initialState = {
-    users: [] as Array<UserType>,
+    users: [] as Array<UserType>, // or ||
     totalCount: 0,
     pageSize: 5,
     currentPage: 1,
@@ -76,7 +76,10 @@ export const unfollow = (userId: number): UnollowActionType => ({type: UNFOLLOW,
 export const setUsers = (users: Array<UserType>): SetUsersActionType => ({type: SET_USERS, users})
 export const setTotalCount = (totalCount: number): setTotalCountActionType => ({type: SET_TOTAL_COUNT, totalCount})
 export const setCurrentPage = (currentPage: number): setCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
-export const toggleIsFetching = (isFetching: boolean): toggleIsFetchingActionType => ({type: TOGGLE_IS_FETCHING, isFetching})
+export const toggleIsFetching = (isFetching: boolean): toggleIsFetchingActionType => ({
+    type: TOGGLE_IS_FETCHING,
+    isFetching
+})
 
 type FollowActionType = {
     type: typeof FOLLOW

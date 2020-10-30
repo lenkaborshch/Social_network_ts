@@ -1,3 +1,17 @@
 img.cover {
     height: 400px;
 }
+
+.descriptionBlock {
+    display: flex;
+}
+
+.userPhoto {
+    margin-right: 10px;
+    width: 300px;
+}
+
+.statusJob img {
+    border-radius: 75px;
+    width: 150px;
+}

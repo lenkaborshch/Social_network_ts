@@ -1,3 +1,4 @@
+/*
 import {v1} from 'uuid'
 import {addPost, profileReducer, updateNewPostText} from './profileReducer'
 import {addMessage, dialogsReducer, updateNewMessageText} from './dialogsReducer'
@@ -146,4 +147,5 @@ const store: StoreType = {
 
         this._callSubscriber(this._state)
     }
-}
+}*/
+export default () => {}

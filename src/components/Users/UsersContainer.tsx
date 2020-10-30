@@ -11,14 +11,19 @@ import {
     toggleIsFetching,
     UserType
 } from '../../redux/usersReducer'
-import * as axios from 'axios'
+import axios from 'axios'
 
 type UsersContainerPropsType = MapStatePropsType & MapDispatchType
+type GetUsersType = {
+    items: Array<UserType>
+    totalCount: number
+    error: string | null
+}
 
 class UsersContainer extends React.Component<UsersContainerPropsType, {}> {
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        axios.default.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
+        axios.get<GetUsersType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
             .then((response) => {
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(response.data.items)
@@ -29,7 +34,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType, {}> {
     onPageChanged = (page: number) => {
         this.props.setCurrentPage(page)
         this.props.toggleIsFetching(true)
-        axios.default.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`)
+        axios.get<GetUsersType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`)
             .then((response) => {
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(response.data.items)

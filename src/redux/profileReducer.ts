@@ -3,16 +3,45 @@ import {v1} from 'uuid'
 
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
+const SET_USERS_PROFILE = 'SET_USERS_PROFILE'
 
-const initialState = {
+export type ProfileType = {
+    'aboutMe': null | string
+    'contacts': {
+        'facebook': null | string
+        'website': null | string
+        'vk': null | string
+        'twitter': null | string
+        'instagram': null | string
+        'youtube': null | string
+        'github': null | string
+        'mainLink': null | string
+    },
+    'lookingForAJob': boolean
+    'lookingForAJobDescription': null | string
+    'fullName': null | string
+    'userId': number
+    'photos': {
+        'small': null | string
+        'large': null | string
+    }
+}
+
+export type ProfilePageType = {
+    posts: PostType[]
+    newPostText: string
+    profile: null | ProfileType
+}
+
+const initialState: ProfilePageType = {
     posts: [
         {id: v1(), message: 'Hey', likesCount: '20'},
         {id: v1(), message: 'How are you?', likesCount: '2'}
     ],
-    newPostText: ''
+    newPostText: '',
+    profile: null
 }
 
-export type ProfilePageType = typeof initialState
 export type PostType = {
     id: string
     message: string
@@ -39,6 +68,12 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 newPostText: action.newText
             }
         }
+        case SET_USERS_PROFILE: {
+            return {
+                ...state,
+                profile: action.profile
+            }
+        }
         default: {
             return state
         }
@@ -52,6 +87,11 @@ export const updateNewPostText = (newText: string): UpdateNewPostTextActionType 
     newText
 })
 
+export const setUserPage = (profile: ProfileType): SetUsersPageActionType => ({
+    type: SET_USERS_PROFILE,
+    profile
+})
+
 type AddPostActionType = {
     type: typeof ADD_POST
 }
@@ -59,4 +99,8 @@ type AddPostActionType = {
 type UpdateNewPostTextActionType = {
     type: typeof UPDATE_NEW_POST_TEXT
     newText: string
+}
+type SetUsersPageActionType = {
+    type: typeof SET_USERS_PROFILE
+    profile: ProfileType
 }
