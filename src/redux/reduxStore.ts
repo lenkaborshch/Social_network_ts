@@ -4,6 +4,7 @@ import {addMessage, dialogsReducer, updateNewMessageText} from './dialogsReducer
 import {sidebarReducer} from './sidebarReducer'
 import {follow, setCurrentPage, setTotalCount, setUsers, toggleIsFetching, unfollow, usersReducer} from './usersReducer'
 import {useDispatch as _useDispatch} from 'react-redux'
+import {authReducer, setAuthUserData} from './authReducer'
 
 export type ActionsTypes =
     ReturnType<typeof addPost>
@@ -17,12 +18,14 @@ export type ActionsTypes =
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof setUserPage>
+    | ReturnType<typeof setAuthUserData>
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
     usersPage: usersReducer,
+    auth: authReducer,
 })
 
 type RootReducerType = typeof rootReducer // это типизация самой функции === (state: AppStateType) => AppStateType
