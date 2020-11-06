@@ -3,6 +3,7 @@ import {UserType} from '../../redux/usersReducer'
 import style from './Users.module.css'
 import {Preloader} from '../common/Preloader/Preloader'
 import {NavLink} from 'react-router-dom'
+import axios from 'axios'
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -31,9 +32,33 @@ export const Users = (props: UsersPropsType) => {
                             : 'https://i.pinimg.com/originals/8e/b0/fd/8eb0fdac7230089db2fa51f53e53397e.jpg'}/>
                     </NavLink>
                 </div>
-                {u.followed
-                    ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>
-                    : <button onClick={() => props.follow(u.id)}>Follow</button>}
+                {
+                    u.followed
+                        ? <button onClick={() => {
+                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                withCredentials: true,
+                                headers: {
+                                    'API-KEY': '1b7c72fc-c879-4275-88e5-e33388eb8130',
+                                }
+                            }).then(res => {
+                                if (res.data.resultCode === 0) {
+                                    props.unfollow(u.id)
+                                }
+                            })
+                        }}>Unfollow</button>
+                        : <button onClick={() => {
+                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                withCredentials: true,
+                                headers: {
+                                    'API-KEY': '1b7c72fc-c879-4275-88e5-e33388eb8130',
+                                }
+                            }).then(res => {
+                                if (res.data.resultCode === 0) {
+                                    props.follow(u.id)
+                                }
+                            })
+                        }}>Follow</button>
+                }
                 <div>{u.name}</div>
                 <div>{u.status}</div>
                 <div>u.location.city</div>
@@ -50,8 +75,8 @@ export const Users = (props: UsersPropsType) => {
                             <span
                                 className={`${style.pages} ${props.currentPage === p ? style.currentPage : ''}`}
                                 onClick={() => props.onPageChanged(p)} key={p}>
-                                {p}
-                            </span>
+                    {p}
+                    </span>
                         )
                     })
                 }

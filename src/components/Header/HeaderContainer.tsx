@@ -20,7 +20,10 @@ type HeaderContainerPropsType = MapStatePropsType & MapDispatchType
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
         axios.get<GetUserData>('https://social-network.samuraijs.com/api/1.0/auth/me', {
-            withCredentials: true
+            withCredentials: true,
+            headers: {
+                'API-KEY': '1b7c72fc-c879-4275-88e5-e33388eb8130',
+            }
         }).then(res => {
                 if (res.data.resultCode === 0) {
                     let {id, login, email} = res.data.data
