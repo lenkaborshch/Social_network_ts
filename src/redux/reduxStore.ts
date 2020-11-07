@@ -2,7 +2,7 @@ import {combineReducers, createStore} from 'redux'
 import {addPost, profileReducer, setUserPage, updateNewPostText} from './profileReducer'
 import {addMessage, dialogsReducer, updateNewMessageText} from './dialogsReducer'
 import {sidebarReducer} from './sidebarReducer'
-import {follow, setCurrentPage, setTotalCount, setUsers, toggleIsFetching, unfollow, usersReducer} from './usersReducer'
+import {follow, setCurrentPage, setTotalCount, setUsers, toggleIsFetching, unfollow, usersReducer, toggleIsFollowing} from './usersReducer'
 import {useDispatch as _useDispatch} from 'react-redux'
 import {authReducer, setAuthUserData} from './authReducer'
 
@@ -19,6 +19,7 @@ export type ActionsTypes =
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof setUserPage>
     | ReturnType<typeof setAuthUserData>
+    | ReturnType<typeof toggleIsFollowing>
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
