@@ -6,7 +6,7 @@ import {
     UserType,
     unfollow,
     setCurrentPage,
-    setTotalCount, toggleIsFetching
+    setTotalCount, toggleIsFetching, toggleIsFollowing
 } from './usersReducer'
 
 let startState: UsersPageType
@@ -50,7 +50,8 @@ beforeEach(() => {
         totalCount: 10,
         pageSize: 5,
         currentPage: 1,
-        isFetching: false
+        isFetching: false,
+        followingInProgress: [1, 2]
     }
 })
 
@@ -134,4 +135,23 @@ test('fetching should be changed', () => {
     const endState = usersReducer(startState, action)
 
     expect(endState.isFetching).toBe(true)
+})
+
+test('user id should be added in array', () => {
+
+    const action = toggleIsFollowing(3, true)
+    const endState = usersReducer(startState, action)
+
+    expect(endState.followingInProgress.length).toBe(3)
+    expect(endState.followingInProgress[0]).toBe(1)
+    expect(endState.followingInProgress[2]).toBe(3)
+})
+
+test('user id should be deleted in array', () => {
+
+    const action = toggleIsFollowing(1, false)
+    const endState = usersReducer(startState, action)
+
+        expect(endState.followingInProgress.length).toBe(1)
+        expect(endState.followingInProgress[0]).toBe(2)
 })
