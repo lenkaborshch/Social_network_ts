@@ -1,5 +1,7 @@
-import {ActionsTypes} from './reduxStore'
+import {ActionsTypes, AppStateType} from './reduxStore'
 import {v1} from 'uuid'
+import {ThunkAction, ThunkDispatch} from 'redux-thunk'
+import {usersAPI} from '../api/api'
 
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
@@ -33,6 +35,12 @@ export type ProfilePageType = {
     profile: null | ProfileType
 }
 
+export type PostType = {
+    id: string
+    message: string
+    likesCount: string
+}
+
 const initialState: ProfilePageType = {
     posts: [
         {id: v1(), message: 'Hey', likesCount: '20'},
@@ -40,12 +48,6 @@ const initialState: ProfilePageType = {
     ],
     newPostText: '',
     profile: null
-}
-
-export type PostType = {
-    id: string
-    message: string
-    likesCount: string
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
@@ -81,16 +83,23 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
 }
 
 export const addPost = (): AddPostActionType => ({type: ADD_POST})
-
 export const updateNewPostText = (newText: string): UpdateNewPostTextActionType => ({
     type: UPDATE_NEW_POST_TEXT,
     newText
 })
-
 export const setUserPage = (profile: ProfileType): SetUsersPageActionType => ({
     type: SET_USERS_PROFILE,
     profile
 })
+
+export const getProfile = (userId: string): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+        usersAPI.getProfile(userId)
+            .then((res) => {
+                dispatch(setUserPage(res.data))
+            })
+    }
+}
 
 type AddPostActionType = {
     type: typeof ADD_POST
@@ -104,3 +113,5 @@ type SetUsersPageActionType = {
     type: typeof SET_USERS_PROFILE
     profile: ProfileType
 }
+
+export type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsTypes>

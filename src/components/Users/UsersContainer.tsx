@@ -2,40 +2,19 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Users} from './Users'
 import {AppStateType} from '../../redux/reduxStore'
-import {
-    follow,
-    setCurrentPage,
-    setTotalCount,
-    setUsers,
-    unfollow,
-    toggleIsFetching,
-    toggleIsFollowing,
-    UserType
-} from '../../redux/usersReducer'
-import {usersAPI} from '../../api/api'
+import {follow, getUsers, setCurrentPage, toggleIsFollowing, unfollow, UserType} from '../../redux/usersReducer'
 
 type UsersContainerPropsType = MapStatePropsType & MapDispatchType
 
 
 class UsersContainer extends React.Component<UsersContainerPropsType, {}> {
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        usersAPI.getUsers(this.props.pageSize, this.props.currentPage)
-            .then((res) => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(res.items)
-                this.props.setTotalCount(res.totalCount)
-            })
+        this.props.getUsers(this.props.pageSize, this.props.currentPage)
     }
 
     onPageChanged = (page: number) => {
         this.props.setCurrentPage(page)
-        this.props.toggleIsFetching(true)
-        usersAPI.getUsers(this.props.pageSize, page)
-            .then((res) => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(res.items)
-            })
+        this.props.getUsers(this.props.pageSize, page)
     }
 
     render() {
@@ -67,11 +46,9 @@ type MapStatePropsType = {
 type MapDispatchType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    setUsers: (users: Array<UserType>) => void
-    setTotalCount: (totalCount: number) => void
     setCurrentPage: (currentPage: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
     toggleIsFollowing: (userId: number, isFetching: boolean) => void
+    getUsers: (pageSize: number, currentPage: number) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
@@ -84,4 +61,4 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 })
 
 export default connect<MapStatePropsType, MapDispatchType, {}, AppStateType>
-(mapStateToProps, {follow, unfollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching, toggleIsFollowing})(UsersContainer)
+(mapStateToProps, {follow, unfollow, setCurrentPage, toggleIsFollowing, getUsers})(UsersContainer)

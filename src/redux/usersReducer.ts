@@ -1,4 +1,6 @@
-import {ActionsTypes} from './reduxStore'
+import {ActionsTypes, AppStateType} from './reduxStore'
+import {usersAPI} from '../api/api'
+import {ThunkAction, ThunkDispatch} from 'redux-thunk'
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -81,8 +83,8 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
     }
 }
 
-export const follow = (userId: number): FollowActionType => ({type: FOLLOW, userId})
-export const unfollow = (userId: number): UnollowActionType => ({type: UNFOLLOW, userId})
+export const followSuccess = (userId: number): FollowSuccessActionType => ({type: FOLLOW, userId})
+export const unfollowSuccess = (userId: number): UnfollowSuccessActionType => ({type: UNFOLLOW, userId})
 export const setUsers = (users: Array<UserType>): SetUsersActionType => ({type: SET_USERS, users})
 export const setTotalCount = (totalCount: number): setTotalCountActionType => ({type: SET_TOTAL_COUNT, totalCount})
 export const setCurrentPage = (currentPage: number): setCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
@@ -96,12 +98,49 @@ export const toggleIsFollowing = (userId: number, isFetching: boolean): toggleIs
     isFetching
 })
 
-type FollowActionType = {
+export const getUsers = (pageSize: number, currentPage: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+        dispatch(toggleIsFetching(true))
+        usersAPI.getUsers(pageSize, currentPage)
+            .then((res) => {
+                dispatch(toggleIsFetching(false))
+                dispatch(setUsers(res.items))
+                dispatch(setTotalCount(res.totalCount))
+            })
+    }
+}
+
+export const unfollow = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+        dispatch(toggleIsFollowing(userId, true))
+        usersAPI.unfollow(userId).then(res => {
+            if (res.resultCode === 0) {
+                dispatch(unfollowSuccess(userId))
+            }
+            dispatch(toggleIsFollowing(userId, false))
+        })
+    }
+}
+
+export const follow = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+        dispatch(toggleIsFollowing(userId, true))
+        usersAPI.follow(userId).then(res => {
+            if (res.resultCode === 0) {
+                dispatch(followSuccess(userId))
+            }
+            dispatch(toggleIsFollowing(userId, false))
+        })
+    }
+}
+
+
+type FollowSuccessActionType = {
     type: typeof FOLLOW
     userId: number
 }
 
-type UnollowActionType = {
+type UnfollowSuccessActionType = {
     type: typeof UNFOLLOW
     userId: number
 }
@@ -131,3 +170,5 @@ type toggleIsFollowingActionType = {
     userId: number
     isFetching: boolean
 }
+
+export type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsTypes>

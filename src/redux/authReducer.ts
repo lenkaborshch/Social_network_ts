@@ -1,4 +1,6 @@
-import {ActionsTypes} from './reduxStore'
+import {ActionsTypes, AppStateType} from './reduxStore'
+import {ThunkAction, ThunkDispatch} from 'redux-thunk'
+import {authAPI} from '../api/api'
 
 const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA'
 
@@ -38,6 +40,18 @@ export const setAuthUserData = (id: number, login: string, email: string): AddPo
     }
 }
 
+export const getAuthUserData = (): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+        authAPI.me().then(res => {
+                if (res.resultCode === 0) {
+                    let {id, login, email} = res.data
+                    dispatch(setAuthUserData(id, login, email))
+                }
+            }
+        )
+    }
+}
+
 type AddPostActionType = {
     type: typeof SET_USER_AUTH_DATA
     data: {
@@ -46,3 +60,4 @@ type AddPostActionType = {
         email: string
     }
 }
+export type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsTypes>

@@ -3,7 +3,6 @@ import {UserType} from '../../redux/usersReducer'
 import style from './Users.module.css'
 import {Preloader} from '../common/Preloader/Preloader'
 import {NavLink} from 'react-router-dom'
-import {followAPI} from '../../api/api'
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -37,25 +36,13 @@ export const Users = (props: UsersPropsType) => {
                 {
                     u.followed
                         ? <button disabled={props.followingInProgress.some(id => id === u.id)}
-                            onClick={() => {
-                                props.toggleIsFollowing(u.id, true)
-                                followAPI.unfollow(u.id).then(res => {
-                                    if (res.resultCode === 0) {
-                                        props.unfollow(u.id)
-                                    }
-                                    props.toggleIsFollowing(u.id, false)
-                                })
-                            }}>Unfollow</button>
+                                  onClick={() => {
+                                      props.unfollow(u.id)
+                                  }}>Unfollow</button>
                         : <button disabled={props.followingInProgress.some(id => id === u.id)}
-                            onClick={() => {
-                                props.toggleIsFollowing(u.id, true)
-                                followAPI.follow(u.id).then(res => {
-                                    if (res.resultCode === 0) {
-                                        props.follow(u.id)
-                                    }
-                                    props.toggleIsFollowing(u.id, false)
-                                })
-                            }}>Follow</button>
+                                  onClick={() => {
+                                      props.follow(u.id)
+                                  }}>Follow</button>
                 }
                 <div>{u.name}</div>
                 <div>{u.status}</div>

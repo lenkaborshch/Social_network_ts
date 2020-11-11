@@ -1,12 +1,14 @@
 import {
-    follow,
+    followSuccess,
+    setCurrentPage,
+    setTotalCount,
+    setUsers,
+    toggleIsFetching,
+    toggleIsFollowing,
+    unfollowSuccess,
     UsersPageType,
     usersReducer,
-    setUsers,
-    UserType,
-    unfollow,
-    setCurrentPage,
-    setTotalCount, toggleIsFetching, toggleIsFollowing
+    UserType
 } from './usersReducer'
 
 let startState: UsersPageType
@@ -57,7 +59,7 @@ beforeEach(() => {
 
 test('user should be followed', () => {
 
-    const action = follow(3)
+    const action = followSuccess(3)
     const endState = usersReducer(startState, action)
 
     expect(endState.users[2].followed).toBe(true)
@@ -67,7 +69,7 @@ test('user should be followed', () => {
 
 test('user should be unfollowed', () => {
 
-    const action = unfollow(2)
+    const action = unfollowSuccess(2)
     const endState = usersReducer(startState, action)
 
     expect(endState.users[1].followed).toBe(false)
@@ -152,6 +154,6 @@ test('user id should be deleted in array', () => {
     const action = toggleIsFollowing(1, false)
     const endState = usersReducer(startState, action)
 
-        expect(endState.followingInProgress.length).toBe(1)
-        expect(endState.followingInProgress[0]).toBe(2)
+    expect(endState.followingInProgress.length).toBe(1)
+    expect(endState.followingInProgress[0]).toBe(2)
 })
