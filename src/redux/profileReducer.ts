@@ -1,11 +1,12 @@
 import {ActionsTypes, AppStateType} from './reduxStore'
 import {v1} from 'uuid'
 import {ThunkAction, ThunkDispatch} from 'redux-thunk'
-import {usersAPI} from '../api/api'
+import {profileAPI} from '../api/api'
 
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_USERS_PROFILE = 'SET_USERS_PROFILE'
+const SET_STATUS = 'SET_STATUS'
 
 export type ProfileType = {
     'aboutMe': null | string
@@ -33,6 +34,7 @@ export type ProfilePageType = {
     posts: PostType[]
     newPostText: string
     profile: null | ProfileType
+    status: null | string
 }
 
 export type PostType = {
@@ -47,7 +49,8 @@ const initialState: ProfilePageType = {
         {id: v1(), message: 'How are you?', likesCount: '2'}
     ],
     newPostText: '',
-    profile: null
+    profile: null,
+    status: null
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
@@ -76,6 +79,12 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 profile: action.profile
             }
         }
+        case SET_STATUS: {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
         default: {
             return state
         }
@@ -91,12 +100,25 @@ export const setUserPage = (profile: ProfileType): SetUsersPageActionType => ({
     type: SET_USERS_PROFILE,
     profile
 })
+export const setStatus = (status: string): SetStatusActionType => ({
+    type: SET_STATUS,
+    status
+})
 
 export const getProfile = (userId: string): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
-        usersAPI.getProfile(userId)
+        profileAPI.getProfile(userId)
             .then((res) => {
                 dispatch(setUserPage(res.data))
+            })
+    }
+}
+
+export const getStatus = (userId: string): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+        profileAPI.getStatus(userId)
+            .then((status) => {
+                if (status) dispatch(setStatus(status))
             })
     }
 }
@@ -112,6 +134,10 @@ type UpdateNewPostTextActionType = {
 type SetUsersPageActionType = {
     type: typeof SET_USERS_PROFILE
     profile: ProfileType
+}
+type SetStatusActionType = {
+    type: typeof SET_STATUS
+    status: string
 }
 
 export type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsTypes>

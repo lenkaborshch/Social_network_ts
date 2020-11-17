@@ -1,5 +1,13 @@
 import {v1} from 'uuid'
-import {addPost, ProfilePageType, profileReducer, updateNewPostText, setUserPage, ProfileType} from './profileReducer'
+import {
+    addPost,
+    ProfilePageType,
+    profileReducer,
+    updateNewPostText,
+    setUserPage,
+    ProfileType,
+    setStatus
+} from './profileReducer'
 
 let startState: ProfilePageType
 
@@ -10,7 +18,8 @@ beforeEach(() => {
             {id: v1(), message: 'How are you?', likesCount: '2'}
         ],
         newPostText: 'Hey hey',
-        profile: null
+        profile: null,
+        status: null
     }
 })
 
@@ -63,4 +72,13 @@ test('profile page should be changed', () => {
     expect(endState.profile?.userId).toBe(2)
     expect(endState.profile?.aboutMe).toBe('я круто чувак 1001%')
     expect(endState.profile?.contacts.twitter).toBe('https://twitter.com/@sdf')
+})
+
+test('status should be changed', () => {
+    const status = 'Hey person'
+
+    const action = setStatus(status)
+    const endState = profileReducer(startState, action)
+
+    expect(endState.status).toBe('Hey person')
 })

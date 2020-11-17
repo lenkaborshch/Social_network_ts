@@ -1,13 +1,14 @@
-import cover from '../../../img/cover.jpg'
 import React from 'react'
 import style from './ProfileInfo.module.css'
 import {ProfileType} from '../../../redux/profileReducer'
+import {ProfileStatus} from './ProfileStatus'
 
 type ProfileInfoPropsType = {
     profile: ProfileType
+    status: null | string
 }
 
-function ProfileInfo(props: ProfileInfoPropsType) {
+export function ProfileInfo(props: ProfileInfoPropsType) {
     const photo = props.profile.photos.large
         ? <img className={style.userPhoto} src={props.profile.photos.large} alt='userImage'/>
         : <img className={style.userPhoto} src='https://www.meme-arsenal.com/memes/18fc6121a90eb592850a5722ee98a963.jpg'
@@ -20,19 +21,15 @@ function ProfileInfo(props: ProfileInfoPropsType) {
 
     return (
         <div>
-            <div>
-                <img className={style.cover} src={cover} alt='coverImage'/>
-            </div>
             <div className={style.descriptionBlock}>
                 <div>{photo}</div>
                 <div>
                     <p>Имя: {props.profile.fullName}</p>
                     <p>{aboutMe}</p>
                     В поисках работы: <p className={style.statusJob}>{lookingForAJob}</p>
+                    <ProfileStatus status={props.status}/>
                 </div>
             </div>
         </div>
     )
 }
-
-export default ProfileInfo

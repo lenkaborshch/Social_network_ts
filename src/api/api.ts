@@ -44,14 +44,21 @@ export const usersAPI = {
         return instance.post<FollowUnfollowUserType>(`follow/${userId}`)
             .then(res => res.data)
     },
-    getProfile: (userId: string) => {
-        return instance.get<ProfileType>(`profile/${userId}`)
-    },
 }
 
 export const authAPI = {
     me: () => {
         return instance.get<GetUserData>(`auth/me`)
+            .then(res => res.data)
+    },
+}
+
+export const profileAPI = {
+    getProfile: (userId: string) => {
+        return instance.get<ProfileType>(`profile/${userId}`)
+    },
+    getStatus: (userId: string) => {
+        return instance.get<null | string>(`profile/status/${userId}`)
             .then(res => res.data)
     },
 }

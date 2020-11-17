@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux'
-import {addPost, profileReducer, setUserPage, updateNewPostText} from './profileReducer'
+import {addPost, profileReducer, setUserPage, updateNewPostText, setStatus} from './profileReducer'
 import {addMessage, dialogsReducer, updateNewMessageText} from './dialogsReducer'
 import {sidebarReducer} from './sidebarReducer'
 import {
@@ -30,6 +30,7 @@ export type ActionsTypes =
     | ReturnType<typeof setUserPage>
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof toggleIsFollowing>
+    | ReturnType<typeof setStatus>
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,

@@ -1,9 +1,9 @@
 import React from 'react'
-import ProfileInfo from './ProfileInfo/ProfileInfo'
+import {ProfileInfo} from './ProfileInfo/ProfileInfo'
 import {MyPostsContainer} from './MyPosts/MyPostsContainer'
 import {connect} from 'react-redux'
 import {AppStateType} from '../../redux/reduxStore'
-import {getProfile, ProfileType, setUserPage} from '../../redux/profileReducer'
+import {getProfile, getStatus, ProfileType, setUserPage} from '../../redux/profileReducer'
 import {RouteComponentProps, withRouter} from 'react-router-dom'
 import {Preloader} from '../common/Preloader/Preloader'
 import {compose} from 'redux'
@@ -20,6 +20,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
         let userId = this.props.match.params.userId
         if (!userId) userId = '7253'
         this.props.getProfile(userId)
+        this.props.getStatus(userId)
     }
 
     render() {
@@ -27,7 +28,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
             !this.props.profile
                 ? <Preloader/>
                 : <div>
-                    <ProfileInfo profile={this.props.profile}/>
+                    <ProfileInfo profile={this.props.profile} status={this.props.status}/>
                     <MyPostsContainer/>
                 </div>
         )
@@ -36,18 +37,22 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
 type MapStatePropsType = {
     profile: null | ProfileType
+    status: null | string
 }
 type MapDispatchType = {
     setUserPage: (profile: ProfileType) => void
     getProfile: (userId: string) => void
+    getStatus: (userId: string) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    status: state.profilePage.status
 })
 
 export default compose(
-    connect<MapStatePropsType, MapDispatchType, {}, AppStateType>(mapStateToProps, {setUserPage, getProfile}),
+    connect<MapStatePropsType, MapDispatchType, {}, AppStateType>
+    (mapStateToProps, {setUserPage, getProfile, getStatus}),
     withRouter,
     withAuthRedirect)
 (ProfileContainer) as React.ComponentType
