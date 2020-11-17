@@ -2,6 +2,9 @@ import {addMessage, updateNewMessageText} from '../../redux/dialogsReducer'
 import {Dialogs} from './Dialogs'
 import {connect} from 'react-redux'
 import {AppStateType} from '../../redux/reduxStore'
+import {withAuthRedirect} from '../common/hoc/WithAuthRedirect'
+import {compose} from 'redux'
+import React from 'react'
 
 export type AuthorMessageType = {
     name: string
@@ -36,5 +39,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     newMessageText: state.dialogsPage.newMessageText
 })
 
-export const DialogsContainer = connect<MapStatePropsType, MapDispatchType, {}, AppStateType>
-(mapStateToProps, {updateNewMessageText, addMessage})(Dialogs)
+export default compose(
+    connect<MapStatePropsType, MapDispatchType, {}, AppStateType>(mapStateToProps, {updateNewMessageText, addMessage}),
+    withAuthRedirect)
+(Dialogs) as React.ComponentType
