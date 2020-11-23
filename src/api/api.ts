@@ -25,10 +25,11 @@ type GetUserData = {
     messages: string[]
     resultCode: number
 }
-type FollowUnfollowUserType = {
+
+type CommonAPIType<T = {}> = {
     resultCode: number
     messages: string[]
-    data: {}
+    data: T
 }
 
 export const usersAPI = {
@@ -37,11 +38,11 @@ export const usersAPI = {
             .then(res => res.data)
     },
     unfollow: (userId: number) => {
-        return instance.delete<FollowUnfollowUserType>(`follow/${userId}`)
+        return instance.delete<CommonAPIType>(`follow/${userId}`)
             .then(res => res.data)
     },
     follow: (userId: number) => {
-        return instance.post<FollowUnfollowUserType>(`follow/${userId}`)
+        return instance.post<CommonAPIType>(`follow/${userId}`)
             .then(res => res.data)
     },
 }
@@ -59,6 +60,10 @@ export const profileAPI = {
     },
     getStatus: (userId: string) => {
         return instance.get<null | string>(`profile/status/${userId}`)
+            .then(res => res.data)
+    },
+    updateStatus: (status: string) => {
+        return instance.put<CommonAPIType>(`profile/status/`, {status})
             .then(res => res.data)
     },
 }

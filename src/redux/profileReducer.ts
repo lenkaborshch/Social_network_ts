@@ -114,13 +114,18 @@ export const getProfile = (userId: string): ThunkType => {
     }
 }
 
-export const getStatus = (userId: string): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
-        profileAPI.getStatus(userId)
-            .then((status) => {
-                if (status) dispatch(setStatus(status))
-            })
-    }
+export const getStatus = (userId: string): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+    profileAPI.getStatus(userId)
+        .then((status) => {
+            if (status) dispatch(setStatus(status))
+        })
+}
+
+export const updateStatus = (status: string): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+    profileAPI.updateStatus(status)
+        .then((res) => {
+            if (res.resultCode === 0) dispatch(setStatus(status))
+        })
 }
 
 type AddPostActionType = {

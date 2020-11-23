@@ -6,6 +6,7 @@ import {ProfileStatus} from './ProfileStatus'
 type ProfileInfoPropsType = {
     profile: ProfileType
     status: null | string
+    updateStatus: (status: string) => void
 }
 
 export function ProfileInfo(props: ProfileInfoPropsType) {
@@ -27,7 +28,7 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
                     <p>Имя: {props.profile.fullName}</p>
                     <p>{aboutMe}</p>
                     В поисках работы: <p className={style.statusJob}>{lookingForAJob}</p>
-                    <ProfileStatus status={props.status}/>
+                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                 </div>
             </div>
         </div>
