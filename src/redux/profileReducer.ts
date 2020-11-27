@@ -4,7 +4,6 @@ import {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {profileAPI} from '../api/api'
 
 const ADD_POST = 'ADD_POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_USERS_PROFILE = 'SET_USERS_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 
@@ -32,7 +31,6 @@ export type ProfileType = {
 
 export type ProfilePageType = {
     posts: PostType[]
-    newPostText: string
     profile: null | ProfileType
     status: null | string
 }
@@ -48,29 +46,22 @@ const initialState: ProfilePageType = {
         {id: v1(), message: 'Hey', likesCount: '20'},
         {id: v1(), message: 'How are you?', likesCount: '2'}
     ],
-    newPostText: '',
     profile: null,
     status: null
 }
+
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
     switch (action.type) {
         case ADD_POST: {
             let newPost: PostType = {
                 id: v1(),
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: '0'
             }
             return {
                 ...state,
-                newPostText: '',
                 posts: [newPost, ...state.posts]
-            }
-        }
-        case UPDATE_NEW_POST_TEXT: {
-            return {
-                ...state,
-                newPostText: action.newText
             }
         }
         case SET_USERS_PROFILE: {
@@ -91,11 +82,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
     }
 }
 
-export const addPost = (): AddPostActionType => ({type: ADD_POST})
-export const updateNewPostText = (newText: string): UpdateNewPostTextActionType => ({
-    type: UPDATE_NEW_POST_TEXT,
-    newText
-})
+export const addPost = (newPostText: string): AddPostActionType => ({type: ADD_POST, newPostText})
 export const setUserPage = (profile: ProfileType): SetUsersPageActionType => ({
     type: SET_USERS_PROFILE,
     profile
@@ -130,12 +117,9 @@ export const updateStatus = (status: string): ThunkType => (dispatch: ThunkDispa
 
 type AddPostActionType = {
     type: typeof ADD_POST
+    newPostText: string
 }
 
-type UpdateNewPostTextActionType = {
-    type: typeof UPDATE_NEW_POST_TEXT
-    newText: string
-}
 type SetUsersPageActionType = {
     type: typeof SET_USERS_PROFILE
     profile: ProfileType

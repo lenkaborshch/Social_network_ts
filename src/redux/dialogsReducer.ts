@@ -2,7 +2,6 @@ import {v1} from 'uuid'
 import {ActionsTypes} from './reduxStore'
 
 const SEND_MESSAGE = 'SEND_MESSAGE'
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
 
 const initialState = {
     dialogs: [
@@ -38,7 +37,6 @@ const initialState = {
             }
         },
     ],
-    newMessageText: ''
 }
 
 export type DialogsPageType = typeof initialState
@@ -48,7 +46,7 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
         case SEND_MESSAGE: {
             let newMessage = {
                 id: v1(),
-                message: state.newMessageText,
+                message: action.newMessageText,
                 author: {
                     name: 'Me',
                     src: 'https://volyn.tabloyid.com/upload/news/1/2019-06/155980298916/1_worlds-most-beautiful-cats-1-57fb53b6755fc__700.jpg'
@@ -56,14 +54,7 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
             }
             return {
                 ...state,
-                newMessageText: '',
                 messages: [...state.messages, newMessage]
-            }
-        }
-        case UPDATE_NEW_MESSAGE_TEXT: {
-            return {
-                ...state,
-                newMessageText: action.newMessageText
             }
         }
         default:
@@ -71,18 +62,8 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
     }
 }
 
-export const addMessage = (): AddMessageActionType => ({type: SEND_MESSAGE})
-
-export const updateNewMessageText = (newMessageText: string): UpdateNewMessageTextActionType => ({
-    type: UPDATE_NEW_MESSAGE_TEXT,
-    newMessageText
-})
-
+export const addMessage = (newMessageText: string): AddMessageActionType => ({type: SEND_MESSAGE, newMessageText})
 type AddMessageActionType = {
     type: typeof SEND_MESSAGE
-}
-
-type UpdateNewMessageTextActionType = {
-    type: typeof UPDATE_NEW_MESSAGE_TEXT
     newMessageText: string
 }

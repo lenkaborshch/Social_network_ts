@@ -40,17 +40,30 @@ export const setAuthUserData = (id: number, login: string, email: string): AddPo
     }
 }
 
-export const getAuthUserData = (): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
-        authAPI.me().then(res => {
+export const getAuthUserData = (): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+    authAPI.me()
+        .then(res => {
                 if (res.resultCode === 0) {
                     let {id, login, email} = res.data
                     dispatch(setAuthUserData(id, login, email))
                 }
             }
         )
+}
+
+
+export const authLogin = (login: string, password: string, rememberMe: boolean): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>): void => {
+        authAPI.login(login, password, rememberMe)
+            .then(res => {
+                    if (res.resultCode === 0) {
+                        dispatch(getAuthUserData())
+                    }
+                }
+            )
     }
 }
+
 
 type AddPostActionType = {
     type: typeof SET_USER_AUTH_DATA

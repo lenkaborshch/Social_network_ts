@@ -52,6 +52,10 @@ export const authAPI = {
         return instance.get<GetUserData>(`auth/me`)
             .then(res => res.data)
     },
+    login: (email: string, password: string, rememberMe: boolean) => {
+        return instance.post<CommonAPIType<{ userId: number }>>(`auth/login`, {email, password, rememberMe})
+            .then(res => res.data)
+    }
 }
 
 export const profileAPI = {

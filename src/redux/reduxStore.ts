@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux'
-import {addPost, profileReducer, setUserPage, updateNewPostText, setStatus} from './profileReducer'
-import {addMessage, dialogsReducer, updateNewMessageText} from './dialogsReducer'
+import {addPost, profileReducer, setStatus, setUserPage} from './profileReducer'
+import {addMessage, dialogsReducer} from './dialogsReducer'
 import {sidebarReducer} from './sidebarReducer'
 import {
     followSuccess,
@@ -15,12 +15,11 @@ import {
 import {useDispatch as _useDispatch} from 'react-redux'
 import {authReducer, setAuthUserData} from './authReducer'
 import thunkMiddleware from 'redux-thunk'
+import {reducer as formReducer} from 'redux-form'
 
 export type ActionsTypes =
     ReturnType<typeof addPost>
-    | ReturnType<typeof updateNewPostText>
     | ReturnType<typeof addMessage>
-    | ReturnType<typeof updateNewMessageText>
     | ReturnType<typeof followSuccess>
     | ReturnType<typeof unfollowSuccess>
     | ReturnType<typeof setUsers>
@@ -38,6 +37,7 @@ const rootReducer = combineReducers({
     sidebar: sidebarReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    form: formReducer,
 })
 
 type RootReducerType = typeof rootReducer // это типизация самой функции === (state: AppStateType) => AppStateType
@@ -45,6 +45,8 @@ export type AppStateType = ReturnType<RootReducerType>
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
+//@ts-ignore
+window.store = store
 
 // for DialogsWithHooks
 interface IRootState extends AppStateType {

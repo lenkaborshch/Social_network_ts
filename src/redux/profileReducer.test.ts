@@ -3,7 +3,6 @@ import {
     addPost,
     ProfilePageType,
     profileReducer,
-    updateNewPostText,
     setUserPage,
     ProfileType,
     setStatus
@@ -17,7 +16,6 @@ beforeEach(() => {
             {id: v1(), message: 'Hey', likesCount: '20'},
             {id: v1(), message: 'How are you?', likesCount: '2'}
         ],
-        newPostText: 'Hey hey',
         profile: null,
         status: null
     }
@@ -25,22 +23,13 @@ beforeEach(() => {
 
 test('correct message should be send in messages array', () => {
 
-    const action = addPost()
+    const action = addPost('Hey hey')
     const endState = profileReducer(startState, action)
 
     expect(endState.posts.length).toBe(3)
     expect(endState.posts[0].likesCount).toBe('0')
     expect(endState.posts[0].message).toBe('Hey hey')
     expect(endState.posts[1].likesCount).toBe('20')
-})
-
-test('new message should be update', () => {
-
-    const action = updateNewPostText('Hello my world!')
-    const endState = profileReducer(startState, action)
-
-    expect(endState.newPostText).toBe('Hello my world!')
-    expect(endState.posts.length).toBe(2)
 })
 
 test('profile page should be changed', () => {

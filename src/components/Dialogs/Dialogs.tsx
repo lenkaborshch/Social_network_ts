@@ -1,16 +1,34 @@
-import React, {ChangeEvent} from 'react'
+import React from 'react'
 import style from './Dialogs.module.css'
 import {DialogType, MessageType} from './DialogsContainer'
 import {DialogItem} from './DialogItem/DialogItem'
 import {Message} from './Message/Message'
+import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 
 type DialogsPropsType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    newMessageText: string
-    updateNewMessageText: (value: string) => void
-    addMessage: () => void
+    addMessage: (newMessageText: string) => void
 }
+
+const AddMessageForm: React.FC<InjectedFormProps> = (props) => {
+    const {handleSubmit} = props
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <Field name='newMessageBody' component='textarea' placeholder='Write your message'/>
+            </div>
+            <div>
+                <button type='submit'>Send</button>
+            </div>
+        </form>
+    )
+}
+
+export const AddMessageReduxForm = reduxForm({
+    form: 'AddMessageForm'
+})(AddMessageForm)
 
 export function Dialogs(props: DialogsPropsType) {
 
@@ -18,19 +36,8 @@ export function Dialogs(props: DialogsPropsType) {
     const messagesElements = props.messages.map(m => <Message key={m.id} id={m.id} message={m.message}
                                                               author={m.author}/>)
 
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewMessageText(e.currentTarget.value)
-    }
-
-    const onSendMessageClick = () => {
-        props.addMessage()
-    }
-
-    const onPressEnterSendMessage = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault()
-            props.addMessage()
-        }
+    const onSubmit = (formData: any) => {
+        props.addMessage(formData.newMessageBody)
     }
 
     return (
@@ -41,14 +48,7 @@ export function Dialogs(props: DialogsPropsType) {
             <div className={style.messages}>
                 <div>{messagesElements}</div>
                 <div className={style.sendingMessage}>
-                    <textarea placeholder='Write your message'
-                              value={props.newMessageText}
-                              onChange={onChangeHandler}
-                              onKeyDown={onPressEnterSendMessage}
-                    />
-                    <div>
-                        <button onClick={onSendMessageClick}>Send</button>
-                    </div>
+                    <AddMessageReduxForm onSubmit={onSubmit}/>
                 </div>
             </div>
         </div>

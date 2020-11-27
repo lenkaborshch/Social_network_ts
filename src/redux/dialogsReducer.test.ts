@@ -1,5 +1,5 @@
 import {v1} from 'uuid'
-import {addMessage, dialogsReducer, DialogsPageType, updateNewMessageText} from './dialogsReducer'
+import {addMessage, DialogsPageType, dialogsReducer} from './dialogsReducer'
 
 let startState: DialogsPageType
 
@@ -35,27 +35,16 @@ beforeEach(() => {
                 }
             },
         ],
-        newMessageText: 'Hello my dear',
     }
 })
 
 test('correct message should be send in messages array', () => {
 
-    const action = addMessage()
+    const action = addMessage('Hello my dear')
     const endState = dialogsReducer(startState, action)
 
     expect(endState.messages.length).toBe(4)
     expect(endState.messages[3].message).toBe('Hello my dear')
     expect(endState.messages[3].author.name).toBe('Me')
-    expect(endState.dialogs.length).toBe(2)
-})
-
-test('new message should be update', () => {
-
-    const action = updateNewMessageText('Hello my friend!')
-    const endState = dialogsReducer(startState, action)
-
-    expect(endState.newMessageText).toBe('Hello my friend!')
-    expect(endState.messages.length).toBe(3)
     expect(endState.dialogs.length).toBe(2)
 })

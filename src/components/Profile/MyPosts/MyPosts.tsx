@@ -1,48 +1,48 @@
-import React, {ChangeEvent} from 'react'
+import React from 'react'
 import style from './MyPosts.module.css'
 import Post from './Post/Post'
 import {PostType} from '../../../redux/profileReducer'
+import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 
 type MyPostsPropsType = {
-    newPostText: string
     posts: Array<PostType>
-    updateNewPostText: (value: string) => void
-    addPost: () => void
+    addPost: (newPostText: string) => void
 }
+
+const AddPostForm: React.FC<InjectedFormProps> = (props) => {
+    const {handleSubmit} = props
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <Field name='newPostText' component='textarea' placeholder='Write your post message'/>
+            </div>
+            <div>
+                <button type='submit'>Add post</button>
+                <button>Remove</button>
+            </div>
+        </form>
+    )
+}
+
+export const AddPostFormReduxForm = reduxForm({
+    form: 'AddPostForm'
+})(AddPostForm)
 
 export function MyPosts(props: MyPostsPropsType) {
 
     const postsElement = props.posts.map(p => <Post key={p.id} message={p.message}
                                                     likesCount={p.likesCount}/>)
 
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value)
-    }
-
-    const onClickAddPost = () => {
-        props.addPost()
-    }
-
-    const onPressEnterAddPost = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault()
-            props.addPost()
-        }
+    const onClickAddPost = (formData: any) => {
+        props.addPost(formData.newPostText)
     }
 
     return (
         <div>
             My posts
             <div>
-                <textarea placeholder='Write your post message'
-                          value={props.newPostText}
-                          onChange={onChangeHandler}
-                          onKeyPress={onPressEnterAddPost}
-                />
-                <div>
-                    <button onClick={onClickAddPost}>Add post</button>
-                    <button>Remove</button>
-                </div>
+                <AddPostFormReduxForm onSubmit={onClickAddPost}/>
             </div>
             <div className={style.posts}>
                 {postsElement}
