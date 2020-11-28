@@ -5,7 +5,7 @@ import {Message} from '../Dialogs/Message/Message'
 import {useSelector} from 'react-redux'
 import {selectDialogsPage, useDispatch} from '../../redux/reduxStore'
 import {addMessage} from '../../redux/dialogsReducer'
-import { AddMessageReduxForm } from '../Dialogs/Dialogs'
+import AddMessageForm from '../Dialogs/AddMessageForm/AddMessageForm'
 
 export function DialogsWithHooks() {
 
@@ -28,7 +28,7 @@ export function DialogsWithHooks() {
             <div className={style.messages}>
                 <div>{messagesElements}</div>
                 <div className={style.sendingMessage}>
-                    <AddMessageReduxForm/>
+                    <AddMessageForm onSubmit={onSubmit}/>
                 </div>
             </div>
         </div>
