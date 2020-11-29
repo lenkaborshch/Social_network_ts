@@ -1,7 +1,7 @@
 import React from 'react'
 import style from './FormControls.module.css'
 
-export const FormControl: React.FC<any> = ({input, meta, element, ...props}) => {
+const FormControl: React.FC<any> = ({input, meta, ...props}) => {
     let hasError = meta.touched && meta.error
     return (
         <div className={hasError ? style.error : ''}>

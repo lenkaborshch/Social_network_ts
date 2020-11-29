@@ -31,6 +31,7 @@ export type ActionsTypes =
     | ReturnType<typeof toggleIsFollowing>
     | ReturnType<typeof setStatus>
 
+
 const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,

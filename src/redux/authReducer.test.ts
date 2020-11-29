@@ -16,7 +16,7 @@ test('set correct user data in auth', () => {
     const login = 'lenka'
     const email = 'lenka@gmail.com'
 
-    const action = setAuthUserData(id, login, email)
+    const action = setAuthUserData(id, login, email, true)
     const endState = authReducer(startState, action)
 
     expect(endState.id).toBe(1111)

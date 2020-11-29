@@ -6,3 +6,8 @@
 .error input {
     border: 2px solid red;
 }
+
+.commonError {
+    border: 2px solid red;
+    color: red;
+}
